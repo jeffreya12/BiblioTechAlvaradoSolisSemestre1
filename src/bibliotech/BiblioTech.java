@@ -5,6 +5,9 @@
  */
 package bibliotech;
 
+import gui.PasswordFrame;
+import sun.security.util.Password;
+
 /**
  *
  * @author jefal
@@ -16,6 +19,8 @@ public class BiblioTech {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        PasswordFrame passwordFrame = new PasswordFrame();
+        passwordFrame.setVisible(true);
     }
     
 }
