@@ -27,21 +27,75 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        materialButton = new javax.swing.JButton();
+        loanButton = new javax.swing.JButton();
+        studentsButton = new javax.swing.JButton();
+        titleLabel = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("BiblioTech");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setPreferredSize(new java.awt.Dimension(800, 450));
+        setResizable(false);
+
+        materialButton.setBackground(new java.awt.Color(255, 102, 102));
+        materialButton.setForeground(new java.awt.Color(255, 102, 102));
+        materialButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/MATERIAL_ICON.png"))); // NOI18N
+
+        loanButton.setBackground(new java.awt.Color(255, 204, 102));
+        loanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/LOAN_ICON.png"))); // NOI18N
+
+        studentsButton.setBackground(new java.awt.Color(51, 153, 255));
+        studentsButton.setForeground(new java.awt.Color(51, 153, 255));
+        studentsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/STUDENT_ICON.png"))); // NOI18N
+        studentsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentsButtonActionPerformed(evt);
+            }
+        });
+
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("BiblioTech");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(studentsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(materialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(loanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(materialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(loanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(studentsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void studentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsButtonActionPerformed
+        // TODO add your handling code here:
+        EnterStudentFrame enterStudentFrame = new EnterStudentFrame();
+        enterStudentFrame.setVisible(true);
+    }//GEN-LAST:event_studentsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -54,7 +108,11 @@ public class MainFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+                else if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -79,5 +137,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton loanButton;
+    private javax.swing.JButton materialButton;
+    private javax.swing.JButton studentsButton;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

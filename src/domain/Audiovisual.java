@@ -14,15 +14,21 @@ public class Audiovisual extends Material{
     private String brand;
     private String model;
     private String kind;
-    private String description;
 
-    public Audiovisual(String brand, String model, String kind, String description, int cuantity, String id) {
-        super(cuantity, id);
+    public Audiovisual(String brand, String model, String kind, int cuantity, String id, int available, String description) {
+        super(cuantity, id, available, description);
         this.brand = brand;
         this.model = model;
         this.kind = kind;
-        this.description = description;
     }
+
+    public Audiovisual(String brand, String model, String kind, String description) {
+        this.brand = brand;
+        this.model = model;
+        this.kind = kind;
+    }
+
+    
 
     public Audiovisual() {
     }
@@ -39,10 +45,6 @@ public class Audiovisual extends Material{
         return kind;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setBrand(String brand) {
         this.brand = brand;
     }
@@ -55,10 +57,8 @@ public class Audiovisual extends Material{
         this.kind = kind;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Audiovisual{" + "brand=" + brand + ", model=" + model + ", kind=" + kind + '}';
+    }    
 }

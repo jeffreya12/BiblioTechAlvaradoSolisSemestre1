@@ -15,6 +15,7 @@ public class DefaultValues {
     public static String PASSWORD = "1234567890";
     public static int FEE_PER_DAY = 100; // Colones
     public static int LOAN_TIME = 5; // Dias
+    public static String ID_ERROR = "El número de carné es inválido";
     
     // Mensajes
     public static String LOGIN_ERROR = "La contraseña es incorrecta";

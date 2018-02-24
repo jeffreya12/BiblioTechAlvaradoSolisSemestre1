@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -35,9 +37,17 @@ public class PasswordFrame extends javax.swing.JFrame {
         passwordField = new javax.swing.JPasswordField();
         titleLabel = new javax.swing.JLabel();
         signInButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("BiblioTech");
 
@@ -47,6 +57,8 @@ public class PasswordFrame extends javax.swing.JFrame {
                 signInButtonActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Ingrese la contraseña");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,22 +71,28 @@ public class PasswordFrame extends javax.swing.JFrame {
                     .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(signInButton)))
+                        .addComponent(signInButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(86, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addGap(32, 32, 32)
                 .addComponent(signInButton)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
@@ -98,6 +116,10 @@ public class PasswordFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_signInButtonActionPerformed
 
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -109,7 +131,11 @@ public class PasswordFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+                else if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -135,6 +161,7 @@ public class PasswordFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton signInButton;
     private javax.swing.JLabel titleLabel;

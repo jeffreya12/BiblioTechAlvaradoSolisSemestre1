@@ -6,8 +6,6 @@
 package bibliotech;
 
 import gui.PasswordFrame;
-import sun.security.util.Password;
-
 /**
  *
  * @author jefal

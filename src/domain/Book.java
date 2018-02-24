@@ -11,23 +11,21 @@ import java.util.Date;
  *
  * @author jefal
  */
-public class Book extends Material{
+public class Book extends Media{
     private String author;
-    private String title;
-    private String genre;
     private String language;
-    private String sinopsis;
-    private Date published;
     private String format;
 
-    public Book(int cuantity, String id, String author, String title, String genre, String language, String sinopsis, Date published, String format) {
-        super(cuantity, id);
+    public Book(String author, String language, String format, String title, String genre, Date published) {
+        super(title, genre, published);
         this.author = author;
-        this.title = title;
-        this.genre = genre;
         this.language = language;
-        this.sinopsis = sinopsis;
-        this.published = published;
+        this.format = format;
+    }
+
+    public Book(String author, String language, String format) {
+        this.author = author;
+        this.language = language;
         this.format = format;
     }
 
@@ -38,24 +36,8 @@ public class Book extends Material{
         return author;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
     public String getLanguage() {
         return language;
-    }
-
-    public String getSinopsis() {
-        return sinopsis;
-    }
-
-    public Date getPublished() {
-        return published;
     }
 
     public String getFormat() {
@@ -66,30 +48,17 @@ public class Book extends Material{
         this.author = author;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public void setLanguage(String language) {
         this.language = language;
-    }
-
-    public void setSinopsis(String sinopsis) {
-        this.sinopsis = sinopsis;
-    }
-
-    public void setPublished(Date published) {
-        this.published = published;
     }
 
     public void setFormat(String format) {
         this.format = format;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Book{" + "author=" + author + ", language=" + language + ", format=" + format + '}';
+    }
+
 }
