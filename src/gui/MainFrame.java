@@ -41,6 +41,11 @@ public class MainFrame extends javax.swing.JFrame {
         materialButton.setBackground(new java.awt.Color(255, 102, 102));
         materialButton.setForeground(new java.awt.Color(255, 102, 102));
         materialButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/MATERIAL_ICON.png"))); // NOI18N
+        materialButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                materialButtonActionPerformed(evt);
+            }
+        });
 
         loanButton.setBackground(new java.awt.Color(255, 204, 102));
         loanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/LOAN_ICON.png"))); // NOI18N
@@ -96,6 +101,12 @@ public class MainFrame extends javax.swing.JFrame {
         EnterStudentFrame enterStudentFrame = new EnterStudentFrame();
         enterStudentFrame.setVisible(true);
     }//GEN-LAST:event_studentsButtonActionPerformed
+
+    private void materialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButtonActionPerformed
+        // TODO add your handling code here:
+        EnterBookFrame enterBookFrame = new EnterBookFrame();
+        enterBookFrame.setVisible(true);
+    }//GEN-LAST:event_materialButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -9,20 +9,20 @@ package domain;
  *
  * @author jefal
  */
-public class Audiovisual extends Material{
+public class MediaPlayer extends Material{
     
     private String brand;
     private String model;
     private String kind;
 
-    public Audiovisual(String brand, String model, String kind, int cuantity, String id, int available, String description) {
+    public MediaPlayer(String brand, String model, String kind, int cuantity, String id, int available, String description) {
         super(cuantity, id, available, description);
         this.brand = brand;
         this.model = model;
         this.kind = kind;
     }
 
-    public Audiovisual(String brand, String model, String kind, String description) {
+    public MediaPlayer(String brand, String model, String kind, String description) {
         this.brand = brand;
         this.model = model;
         this.kind = kind;
@@ -30,7 +30,7 @@ public class Audiovisual extends Material{
 
     
 
-    public Audiovisual() {
+    public MediaPlayer() {
     }
 
     public String getBrand() {
