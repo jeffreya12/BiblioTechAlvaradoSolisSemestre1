@@ -5,6 +5,9 @@
  */
 package gui;
 
+import javax.swing.JOptionPane;
+import resources.DefaultValues;
+
 /**
  *
  * @author jefal
@@ -104,8 +107,27 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void materialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButtonActionPerformed
         // TODO add your handling code here:
-        EnterBookFrame enterBookFrame = new EnterBookFrame();
-        enterBookFrame.setVisible(true);
+        Object selected = JOptionPane.showInputDialog(null, 
+                "Elija un tipo de recurso a registrar:", 
+                "Selection", JOptionPane.DEFAULT_OPTION, null, 
+                DefaultValues.MATERIAL_TYPE, "0");
+        if (selected != null){ // Es nulo si no se scepta
+            String selectedString = selected.toString();
+            switch (selectedString){
+                case "Reproductor multimedia":
+                    EnterMediaPlayerFrame enterMediaPlayerFrame = new EnterMediaPlayerFrame();
+                    enterMediaPlayerFrame.setVisible(true);
+                    break;
+                case "Multimedia":
+                    EnterMediaFrame enterMediaFrame = new EnterMediaFrame();
+                    enterMediaFrame.setVisible(true);
+                    break;
+                case "Libro":
+                    EnterBookFrame enterBookFrame = new EnterBookFrame();
+                    enterBookFrame.setVisible(true);
+                    break;
+            }
+        }
     }//GEN-LAST:event_materialButtonActionPerformed
 
     /**
