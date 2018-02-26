@@ -33,7 +33,7 @@ public class LoanFrame extends javax.swing.JFrame {
 
         frameTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         frameTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        frameTitleLabel.setText("Registro de libros");
+        frameTitleLabel.setText("Nuevo préstamo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
