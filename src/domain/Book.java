@@ -16,8 +16,10 @@ public class Book extends Media{
     private String language;
     private String format;
 
-    public Book(String author, String language, String format, String title, String genre, Date published) {
-        super(title, genre, published);
+    public Book(String author, String language, String format, String title, 
+            String genre, Date published, int quantity, String id, int available, 
+            String description) {
+        super(title, genre, published, quantity, id, available, description);
         this.author = author;
         this.language = language;
         this.format = format;
@@ -58,7 +60,9 @@ public class Book extends Media{
 
     @Override
     public String toString() {
-        return "Book{" + "author=" + author + ", language=" + language + ", format=" + format + '}';
+        return super.toString() + "\nBook{" + "author=" 
+                + author + ", language=" + language 
+                + ", format=" + format + '}';
     }
 
 }

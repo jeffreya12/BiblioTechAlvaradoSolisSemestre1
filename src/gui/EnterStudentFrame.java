@@ -137,11 +137,11 @@ public class EnterStudentFrame extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        if (checkId(idTextField.getText())){
-            String name = nameTextField.getText();
-            String lastNames = lastNamesTextField.getText();
-            String id = idComboBox.getSelectedItem() + idTextField.getText();
-
+        String name = nameTextField.getText();
+        String lastNames = lastNamesTextField.getText();
+        String id = idComboBox.getSelectedItem() + idTextField.getText();
+        
+        if (DefaultValues.checkId(idTextField.getText())){
             Student student = new Student(name, lastNames, id);
             
             System.out.println(student.toString());
@@ -152,23 +152,7 @@ public class EnterStudentFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, DefaultValues.ID_ERROR);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private boolean checkId(String id){
-        boolean isCorrect;
-        if(id.length() >= 5){
-            try{
-                Integer.parseInt(id);
-                isCorrect = true;
-            }
-            catch(Exception e){
-                isCorrect = false;
-            }
-        }
-        else{
-            isCorrect = false;
-        }
-        return isCorrect;
-    }
+  
     
     /**
      * @param args the command line arguments

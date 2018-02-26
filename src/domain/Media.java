@@ -16,8 +16,8 @@ public class Media extends Material{
     private String genre;
     private Date published;
 
-    public Media(String title, String genre, Date published, int cuantity, String id, int available, String description) {
-        super(cuantity, id, available, description);
+    public Media(String title, String genre, Date published, int quantity, String id, int available, String description) {
+        super(quantity, id, available, description);
         this.title = title;
         this.genre = genre;
         this.published = published;
@@ -58,7 +58,8 @@ public class Media extends Material{
 
     @Override
     public String toString() {
-        return "Media{" + "title=" + title + ", genre=" + genre + ", published=" + published + '}';
+        return super.toString() + "\nMedia{" + "title=" + title 
+                + ", genre=" + genre + ", published=" + published + '}';
     }
     
 }

@@ -10,13 +10,13 @@ package domain;
  * @author jefal
  */
 public class Material {
-    private int cuantity;
+    private int quantity;
     private String id;
     private int available;
     private String description;
 
-    public Material(int cuantity, String id, int available, String description) {
-        this.cuantity = cuantity;
+    public Material(int quantity, String id, int available, String description) {
+        this.quantity = quantity;
         this.id = id;
         this.available = available;
         this.description = description;
@@ -25,8 +25,8 @@ public class Material {
     public Material() {
     }
 
-    public int getCuantity() {
-        return cuantity;
+    public int getquantity() {
+        return quantity;
     }
 
     public String getId() {
@@ -41,8 +41,8 @@ public class Material {
         return description;
     }
 
-    public void setCuantity(int cuantity) {
-        this.cuantity = cuantity;
+    public void setquantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setId(String id) {
@@ -59,7 +59,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" + "cuantity=" + cuantity + ", id=" + id + ", available=" + available + ", description=" + description + '}';
+        return "Material{" + "quantity=" + quantity + ", id=" + id + ", available=" + available + ", description=" + description + '}';
     }
     
 }

@@ -5,7 +5,9 @@
  */
 package gui;
 
+import domain.Media;
 import java.util.Date;
+import resources.DefaultValues;
 
 /**
  *
@@ -47,6 +49,7 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         frameTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         frameTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -73,6 +76,11 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         publishedDatePicker.setDate(new Date());
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         descriptionLabel.setText("Descripción");
 
@@ -171,6 +179,27 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String title = titleTextField.getText();
+        String genre = genreTextField.getText();
+        Date published = publishedDatePicker.getDate();
+        String description = descriptionTextArea.getText();
+        int quantity = Integer.parseInt(quantitySpinner.getValue().toString());
+        String id = idTextField.getText();
+        
+        if(DefaultValues.checkId(id)){
+            
+            Media media = new Media(title, genre, published, quantity,
+                    id, quantity, description);
+            
+            System.out.println(media);
+            
+            this.dispose();
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

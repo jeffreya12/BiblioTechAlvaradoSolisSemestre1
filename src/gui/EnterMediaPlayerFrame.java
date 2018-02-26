@@ -5,6 +5,11 @@
  */
 package gui;
 
+import domain.MediaPlayer;
+import javax.swing.JOptionPane;
+import resources.DefaultValues;
+import sun.management.jmxremote.ConnectorBootstrap;
+
 /**
  *
  * @author jefal
@@ -33,18 +38,19 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
         publishedLabel = new javax.swing.JLabel();
         quantityLabel = new javax.swing.JLabel();
         idLabel = new javax.swing.JLabel();
-        titleTextField = new javax.swing.JTextField();
-        genreTextField = new javax.swing.JTextField();
+        brandTextField = new javax.swing.JTextField();
+        modelTextField = new javax.swing.JTextField();
         idTextField = new javax.swing.JTextField();
         quantitySpinner = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        submitButton = new javax.swing.JButton();
         descriptionLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
         cancelButton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        kindComboBox = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         frameTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         frameTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -60,15 +66,20 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
 
         idLabel.setText("Identificador");
 
-        titleTextField.addActionListener(new java.awt.event.ActionListener() {
+        brandTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleTextFieldActionPerformed(evt);
+                brandTextFieldActionPerformed(evt);
             }
         });
 
         quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
-        jButton1.setText("Guardar");
+        submitButton.setText("Guardar");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         descriptionLabel.setText("Descripción");
 
@@ -83,7 +94,7 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Grabadora", "Laptop", "Lector de CD/DVD", "Proyector", " " }));
+        kindComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Grabadora", "Laptop", "Lector de CD/DVD", "Proyector" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +108,7 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(submitButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
@@ -115,10 +126,10 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
                             .addComponent(descriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleTextField)
-                            .addComponent(genreTextField)
+                            .addComponent(brandTextField)
+                            .addComponent(modelTextField)
                             .addComponent(jScrollPane1)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(kindComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,15 +140,15 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(titleLabel)
-                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genreLabel)
-                    .addComponent(genreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(publishedLabel)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kindComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(descriptionLabel)
@@ -152,7 +163,7 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
                     .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(submitButton)
                     .addComponent(cancelButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -161,14 +172,35 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void titleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleTextFieldActionPerformed
+    private void brandTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_titleTextFieldActionPerformed
+    }//GEN-LAST:event_brandTextFieldActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+        String brand = brandTextField.getText();
+        String model = modelTextField.getText();
+        String kind = kindComboBox.getSelectedItem().toString();
+        String description = descriptionTextArea.getText();
+        int quantity = Integer.parseInt(quantitySpinner.getValue().toString());
+        String id = idTextField.getText();
+        
+        if (DefaultValues.checkId(id)){
+            MediaPlayer mediaPlayer = new MediaPlayer(brand, model, kind, quantity, id, quantity, description);
+            
+            System.out.println(mediaPlayer.toString());
+            
+            this.dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, DefaultValues.ID_ERROR);
+        }
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,21 +238,21 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField brandTextField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JLabel frameTitleLabel;
     private javax.swing.JLabel genreLabel;
-    private javax.swing.JTextField genreTextField;
     private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> kindComboBox;
+    private javax.swing.JTextField modelTextField;
     private javax.swing.JLabel publishedLabel;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JSpinner quantitySpinner;
+    private javax.swing.JButton submitButton;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JTextField titleTextField;
     // End of variables declaration//GEN-END:variables
 }
