@@ -162,7 +162,7 @@ public class EnterStudentFrame extends javax.swing.JFrame {
             
         }
         else{
-            JOptionPane.showMessageDialog(this, DefaultValues.ID_ERROR);
+            JOptionPane.showMessageDialog(this, DefaultValues.STUDENT_ID_ERROR);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
   

@@ -25,7 +25,7 @@ public class Material {
     public Material() {
     }
 
-    public int getquantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -41,7 +41,7 @@ public class Material {
         return description;
     }
 
-    public void setquantity(int quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -60,6 +60,13 @@ public class Material {
     @Override
     public String toString() {
         return "Material{" + "quantity=" + quantity + ", id=" + id + ", available=" + available + ", description=" + description + '}';
+    }
+    
+    public int size(){
+        return this.getDescription().length() * 2 // description 
+                + this.getId().length() * 2 // id
+                + 4 // available
+                + 4; // quantity
     }
     
 }

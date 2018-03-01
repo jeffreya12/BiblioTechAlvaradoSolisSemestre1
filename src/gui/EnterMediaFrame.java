@@ -7,6 +7,7 @@ package gui;
 
 import domain.Media;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import resources.DefaultValues;
 
 /**
@@ -198,6 +199,9 @@ public class EnterMediaFrame extends javax.swing.JFrame {
             
             this.dispose();
             
+        }
+        else{
+            JOptionPane.showMessageDialog(this, DefaultValues.MEDIA_ID_ERROR);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -5,7 +5,7 @@
  */
 package file;
 
-import domain.Student;
+import domain.MediaPlayer;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -17,13 +17,14 @@ import resources.DefaultValues;
  *
  * @author jefal
  */
-public class StudentFile {
+public class MediaPlayerFile {
+    
     public RandomAccessFile randomAccessFile;
     private int regsQuantity;//me indica la cantidad de registros
     private int regSize;
     private String myFilePath;
-
-    public StudentFile(File file) throws IOException{
+    
+    public MediaPlayerFile(File file) throws IOException{
         start(file);
     }
     
@@ -33,7 +34,7 @@ public class StudentFile {
         
         //tamanno maximo de los registros dentro de esta 
         //clase
-        this.regSize = DefaultValues.STUDENT_REG_SIZE;
+        this.regSize = DefaultValues.MEDIA_PLAYER_REG_SIZE;
         
         //una validacion basica
         if(file.exists() && !file.isFile()){
@@ -57,10 +58,10 @@ public class StudentFile {
         return regsQuantity;
     }
     
-    public boolean putValue(int position, Student student) throws IOException{
+    public boolean putValue(int position, MediaPlayer mediaPlayer) throws IOException{
         //una pequenna validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
-            if(student.size() > regSize){
+            if(mediaPlayer.size() > regSize){
                 System.err.print("7001 record size is out of bounds");
                 return false;
             }
@@ -68,9 +69,13 @@ public class StudentFile {
                 //escribimos en archivo
                 randomAccessFile.seek(position * regSize);
                 
-                randomAccessFile.writeUTF(student.getName());
-                randomAccessFile.writeUTF(student.getLastNames());
-                randomAccessFile.writeUTF(student.getId());
+                randomAccessFile.writeUTF(mediaPlayer.getBrand());
+                randomAccessFile.writeUTF(mediaPlayer.getModel());
+                randomAccessFile.writeUTF(mediaPlayer.getKind());
+                randomAccessFile.writeUTF(mediaPlayer.getDescription());
+                randomAccessFile.writeUTF(mediaPlayer.getId());
+                randomAccessFile.writeInt(mediaPlayer.getQuantity());
+                randomAccessFile.writeInt(mediaPlayer.getAvailable());
                 
                 return true;
             }
@@ -83,9 +88,9 @@ public class StudentFile {
         
     }//fin metodo
     
-    public boolean addEndRecord(Student student) throws IOException{
+    public boolean addEndRecord(MediaPlayer mediaPlayer) throws IOException{
         //insertar al final del archivo
-        boolean success = putValue(regsQuantity, student);
+        boolean success = putValue(regsQuantity, mediaPlayer);
         
         if(success){
             ++regsQuantity;
@@ -93,26 +98,30 @@ public class StudentFile {
         return success;
     }
     
-    public Student getRecord(int position) throws IOException{
+    public MediaPlayer getRecord(int position) throws IOException{
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
             //colocamos el puntero en el lugar 
             randomAccessFile.seek(position * regSize);
             
             //instancia de person
-            Student myStudent = new Student();
+            MediaPlayer myMediaPlayer = new MediaPlayer();
             
             //llevamos a cabo las lecturas
-            myStudent.setName(randomAccessFile.readUTF());
-            myStudent.setLastNames(randomAccessFile.readUTF());
-            myStudent.setId(randomAccessFile.readUTF());
+            myMediaPlayer.setBrand(randomAccessFile.readUTF());
+            myMediaPlayer.setModel(randomAccessFile.readUTF());
+            myMediaPlayer.setKind(randomAccessFile.readUTF());
+            myMediaPlayer.setDescription(randomAccessFile.readUTF());
+            myMediaPlayer.setId(randomAccessFile.readUTF());
+            myMediaPlayer.setQuantity(randomAccessFile.readInt());
+            myMediaPlayer.setAvailable(randomAccessFile.readInt());
             
             //si es delete no retorno
-            if(myStudent.getId().equalsIgnoreCase(DefaultValues.DELETE_NAME_ON_RECORD)){
+            if(myMediaPlayer.getId().equalsIgnoreCase(DefaultValues.DELETE_NAME_ON_RECORD)){
                 return null;
             }
             else{
-                return myStudent;
+                return myMediaPlayer;
             }
             
         }
@@ -122,39 +131,39 @@ public class StudentFile {
         }
     }//fin de metodo
     
-    public List<Student> getAllRecords() throws IOException{
+    public List<MediaPlayer> getAllRecords() throws IOException{
         
         //variables a retornar
-        List<Student> students = new ArrayList<Student>();
+        List<MediaPlayer> mediaPlayers = new ArrayList<MediaPlayer>();
         
         //recorro todos mis registros y los inserto en la lista
         for(int i = 0; i < regsQuantity; i++){
-            Student studentTemp = this.getRecord(i);
+            MediaPlayer mediaPlayerTemp = this.getRecord(i);
             
-            if(studentTemp != null){
-                students.add(studentTemp);
+            if(mediaPlayerTemp != null){
+                mediaPlayers.add(mediaPlayerTemp);
             }
         }
         
-        return students;
+        return mediaPlayers;
     }//fin metodo
     
     public boolean deleteRecord(String id) throws IOException{
-        Student myStudent;
+        MediaPlayer myMediaPlayer;
         
         //buscar el registro para la eliminacion
         for(int i = 0; i < regsQuantity; i++){
             
             //obtengo a la persona de esa posicion
-            myStudent = this.getRecord(i);
+            myMediaPlayer = this.getRecord(i);
                 
             //pregunto si es la persona que quiero eliminar
-            if(myStudent.getId().equalsIgnoreCase(id)){
+            if(myMediaPlayer.getId().equalsIgnoreCase(id)){
 
                 //marcar esta persona como eliminada
-                myStudent.setId(DefaultValues.DELETE_NAME_ON_RECORD);
+                myMediaPlayer.setId(DefaultValues.DELETE_NAME_ON_RECORD);
 
-                return this.putValue(i, myStudent);
+                return this.putValue(i, myMediaPlayer);
             }
         }
         

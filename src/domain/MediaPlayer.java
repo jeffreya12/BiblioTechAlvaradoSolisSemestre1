@@ -60,5 +60,12 @@ public class MediaPlayer extends Material{
     @Override
     public String toString() {
         return super.toString() + "\nAudiovisual{" + "brand=" + brand + ", model=" + model + ", kind=" + kind + '}';
-    }    
+    }
+    
+    public int size(){
+        return super.size()
+                + this.getBrand().length() * 2 
+                + this.getModel().length() * 2 
+                + this.getKind().length() * 2;
+    }
 }

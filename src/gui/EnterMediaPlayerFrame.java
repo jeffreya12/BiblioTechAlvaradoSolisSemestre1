@@ -6,6 +6,9 @@
 package gui;
 
 import domain.MediaPlayer;
+import file.MediaPlayerFile;
+import file.StudentFile;
+import java.io.File;
 import javax.swing.JOptionPane;
 import resources.DefaultValues;
 import sun.management.jmxremote.ConnectorBootstrap;
@@ -191,14 +194,23 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
         String id = idTextField.getText();
         
         if (DefaultValues.checkId(id)){
-            MediaPlayer mediaPlayer = new MediaPlayer(brand, model, kind, quantity, id, quantity, description);
+            MediaPlayer newMediaPlayer = new MediaPlayer(brand, model, kind, quantity, id, quantity, description);
             
-            System.out.println(mediaPlayer.toString());
-            
-            this.dispose();
+            try{
+                File fileMediaPlayer = new File(DefaultValues.MEDIA_PLAYER_FILE_PATH);
+                MediaPlayerFile mediaPlayerFile = new MediaPlayerFile(fileMediaPlayer);
+                mediaPlayerFile.addEndRecord(newMediaPlayer);
+                mediaPlayerFile.close();
+                
+                this.dispose();
+            }
+            catch(Exception e){
+                System.err.println(e.toString());
+                JOptionPane.showMessageDialog(this, DefaultValues.FAILED_INSERT);
+            }
         }
         else{
-            JOptionPane.showMessageDialog(this, DefaultValues.ID_ERROR);
+            JOptionPane.showMessageDialog(this, DefaultValues.MEDIA_PLAYER_ID_ERROR);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
