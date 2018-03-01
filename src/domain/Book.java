@@ -64,5 +64,12 @@ public class Book extends Media{
                 + author + ", language=" + language 
                 + ", format=" + format + '}';
     }
+    
+    public int size(){
+        return super.size()
+                + this.getAuthor().length() * 2 
+                + this.getLanguage().length() * 2 
+                + this.getFormat().length() * 2;
+    }
 
 }

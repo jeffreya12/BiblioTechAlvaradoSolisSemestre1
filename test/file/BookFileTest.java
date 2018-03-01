@@ -5,8 +5,9 @@
  */
 package file;
 
-import domain.Media;
+import domain.Book;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,23 +15,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import resources.DefaultValues;
-import java.io.IOException;
 
 /**
  *
  * @author jefal
  */
-public class MediaFileTest {
+public class BookFileTest {
     
-    public static MediaFile mediaFile;
+    public static BookFile bookFile;
     
-    public MediaFileTest() {
+    public BookFileTest() {
     }
     
     @BeforeClass
     public static void setUpClass() throws IOException {
-        File fileMedia = new File(DefaultValues.MEDIA_FILE_PATH);
-        mediaFile = new MediaFile(fileMedia);
+        
+        File fileBook = new File(DefaultValues.BOOK_FILE_PATH);
+        bookFile = new BookFile(fileBook);
+        
     }
     
     @AfterClass
@@ -47,11 +49,10 @@ public class MediaFileTest {
 
     @Test
     public void testGetAllRecords() throws Exception {
-        List<Media> medias = mediaFile.getAllRecords();
+        List<Book> books = bookFile.getAllRecords();
         
-        for(Media currentMedia: medias){
-            System.out.println(currentMedia.toString());
+        for(Book currentBook: books){
+            System.out.println(currentBook.toString());
         }
     }
-    
 }

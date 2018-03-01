@@ -6,6 +6,9 @@
 package gui;
 
 import domain.Book;
+import file.BookFile;
+import file.MediaFile;
+import java.io.File;
 import resources.Isbn;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -111,7 +114,7 @@ public class EnterBookFrame extends javax.swing.JFrame {
             }
         });
 
-        formatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Digital", "Físico", " " }));
+        formatComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Digital", "Físico" }));
         formatComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formatComboBoxActionPerformed(evt);
@@ -248,12 +251,21 @@ public class EnterBookFrame extends javax.swing.JFrame {
         
         if (Isbn.isValid(id)){
             
-            Book book = new Book(author, language, format, title, genre, 
+            Book newBook = new Book(author, language, format, title, genre, 
                     published, quantity, id, quantity, description);
             
-            System.out.println(book.toString());
-            
-            this.dispose();
+            try{
+                File fileBook = new File(DefaultValues.BOOK_FILE_PATH);
+                BookFile bookFile = new BookFile(fileBook);
+                bookFile.addEndRecord(newBook);
+                bookFile.close();
+                
+                this.dispose();
+            }
+            catch(Exception e){
+                System.err.println(e.toString());
+                JOptionPane.showMessageDialog(this, DefaultValues.FAILED_INSERT);
+            }
             
         }
         else {
