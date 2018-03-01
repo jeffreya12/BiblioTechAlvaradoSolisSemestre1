@@ -53,4 +53,14 @@ public class Student {
         return "Student{" + "name=" + name + ", lastNames=" + lastNames + ", id=" + id + '}';
     }
     
+    public int size(){
+        //tamanno de las variables en bytes
+        //LONG: necesita dos bytes
+        //String: cada caracter necesita dos bytes de espacio,
+        //esto si se utiliza UTF
+        return this.getLastNames().length() * 2 
+                + this.getName().length() * 2 
+                + this.getId().length() * 2;
+    }
+    
 }

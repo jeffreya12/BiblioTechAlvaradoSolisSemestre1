@@ -25,10 +25,15 @@ public class DefaultValues {
                                             "Multimedia",
                                             "Reproductor multimedia"
                                            };
+    public static String STUDENT_FILE_PATH = "./Student.dat";
+    
+    
+    public static String DELETE_NAME_ON_RECORD = "delete";
     
     // Mensajes
     public static String LOGIN_ERROR = "La contraseña es incorrecta";
     public static String ID_ERROR = "El número de carné es inválido";
+    public static String FAILED_INSERT = "Error guardando sus datos";
     
     // Funciones
     public static boolean checkId(String id){

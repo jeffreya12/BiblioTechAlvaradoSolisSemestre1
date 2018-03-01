@@ -6,7 +6,10 @@
 package gui;
 
 import domain.Student;
+import file.StudentFile;
 import java.awt.TextField;
+import java.io.File;
+import java.util.List;
 import javax.swing.JOptionPane;
 import resources.DefaultValues;
 
@@ -142,11 +145,21 @@ public class EnterStudentFrame extends javax.swing.JFrame {
         String id = idComboBox.getSelectedItem() + idTextField.getText();
         
         if (DefaultValues.checkId(idTextField.getText())){
-            Student student = new Student(name, lastNames, id);
+            Student newStudent = new Student(name, lastNames, id);
             
-            System.out.println(student.toString());
-        
-            this.dispose();
+            try{
+                File fileStudent = new File(DefaultValues.STUDENT_FILE_PATH);
+                StudentFile studentFile = new StudentFile(fileStudent);
+                studentFile.addEndRecord(newStudent);
+                studentFile.close();
+                
+                this.dispose();
+            }
+            catch(Exception e){
+                System.err.println(e.toString());
+                JOptionPane.showMessageDialog(this, DefaultValues.FAILED_INSERT);
+            }
+            
         }
         else{
             JOptionPane.showMessageDialog(this, DefaultValues.ID_ERROR);
