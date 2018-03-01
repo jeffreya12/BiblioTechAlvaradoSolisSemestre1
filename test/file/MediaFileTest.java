@@ -5,32 +5,35 @@
  */
 package file;
 
+import domain.Media;
 import domain.MediaPlayer;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import resources.DefaultValues;
+import static file.MediaPlayerFileTest.mediaFile;
+import java.io.IOException;
 
 /**
  *
  * @author jefal
  */
-public class MediaPlayerFileTest {
+public class MediaFileTest {
     
-    public static MediaPlayerFile mediaFile;
+    public static MediaFile mediaFile;
     
-    public MediaPlayerFileTest() {
+    public MediaFileTest() {
     }
     
     @BeforeClass
     public static void setUpClass() throws IOException {
-        File fileMediaPlayer = new File(DefaultValues.MEDIA_PLAYER_FILE_PATH);
-        mediaFile = new MediaPlayerFile(fileMediaPlayer);
+        File fileMedia = new File(DefaultValues.MEDIA_FILE_PATH);
+        mediaFile = new MediaFile(fileMedia);
     }
     
     @AfterClass
@@ -44,13 +47,13 @@ public class MediaPlayerFileTest {
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void testGetAllRecords() throws Exception {
-        List<MediaPlayer> mediaPlayers = mediaFile.getAllRecords();
+        List<Media> medias = mediaFile.getAllRecords();
         
-        for(MediaPlayer currentMediaPlayer: mediaPlayers){
-            System.out.println(currentMediaPlayer.toString());
+        for(Media currentMedia: medias){
+            System.out.println(currentMedia.toString());
         }
     }
     

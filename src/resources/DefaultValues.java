@@ -22,13 +22,15 @@ public class DefaultValues {
     public static int FEE_PER_DAY = 100; // Colones
     public static int LOAN_TIME = 5; // Dias
     public static int STUDENT_REG_SIZE = 140; // Tamanno de registro Student
-    public static int MEDIA_PLAYER_REG_SIZE = 300; // Tamanno de registro Student
+    public static int MEDIA_PLAYER_REG_SIZE = 500; // Tamanno de registro MediaPlayer
+    public static int MEDIA_REG_SIZE = 500; // Tamanno de registro Media
     public static String[] MATERIAL_TYPE = {"Libro",
                                             "Multimedia",
                                             "Reproductor multimedia"
                                            };
     public static String STUDENT_FILE_PATH = "./Student.dat";
     public static String MEDIA_PLAYER_FILE_PATH = "./MediaPlayer.dat";
+    public static String MEDIA_FILE_PATH = "./Media.dat";
     
     public static String DELETE_NAME_ON_RECORD = "delete";
     

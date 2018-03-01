@@ -6,6 +6,9 @@
 package gui;
 
 import domain.Media;
+import file.MediaFile;
+import file.MediaPlayerFile;
+import java.io.File;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import resources.DefaultValues;
@@ -192,12 +195,21 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         
         if(DefaultValues.checkId(id)){
             
-            Media media = new Media(title, genre, published, quantity,
+            Media newMedia = new Media(title, genre, published, quantity,
                     id, quantity, description);
             
-            System.out.println(media);
-            
-            this.dispose();
+            try{
+                File fileMedia = new File(DefaultValues.MEDIA_FILE_PATH);
+                MediaFile mediaFile = new MediaFile(fileMedia);
+                mediaFile.addEndRecord(newMedia);
+                mediaFile.close();
+                
+                this.dispose();
+            }
+            catch(Exception e){
+                System.err.println(e.toString());
+                JOptionPane.showMessageDialog(this, DefaultValues.FAILED_INSERT);
+            }
             
         }
         else{

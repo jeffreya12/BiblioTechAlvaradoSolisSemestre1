@@ -62,4 +62,11 @@ public class Media extends Material{
                 + ", genre=" + genre + ", published=" + published + '}';
     }
     
+    public int size(){
+        return super.size()
+                + this.getTitle().length() * 2 
+                + this.getGenre().length() * 2 
+                + 8; // Tamanno long de Date
+    }
+    
 }
