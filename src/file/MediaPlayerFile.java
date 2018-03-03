@@ -148,6 +148,19 @@ public class MediaPlayerFile {
         return mediaPlayers;
     }//fin metodo
     
+    public int searchRecord(String id) throws IOException{
+        MediaPlayer myMediaPlayer = null;
+        
+        for(int i = 0; i < regsQuantity; i++){
+            myMediaPlayer = this.getRecord(i);
+            if(myMediaPlayer.getId().equalsIgnoreCase(id)){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
     public boolean deleteRecord(String id) throws IOException{
         MediaPlayer myMediaPlayer;
         

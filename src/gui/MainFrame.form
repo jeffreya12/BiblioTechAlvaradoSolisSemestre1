@@ -89,6 +89,9 @@
           <Image iconType="3" name="/resources/images/LOAN_ICON.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loanButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="studentsButton">
       <Properties>

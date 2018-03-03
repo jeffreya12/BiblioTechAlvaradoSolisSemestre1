@@ -52,6 +52,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         loanButton.setBackground(new java.awt.Color(255, 204, 102));
         loanButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/LOAN_ICON.png"))); // NOI18N
+        loanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loanButtonActionPerformed(evt);
+            }
+        });
 
         studentsButton.setBackground(new java.awt.Color(51, 153, 255));
         studentsButton.setForeground(new java.awt.Color(51, 153, 255));
@@ -129,6 +134,47 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_materialButtonActionPerformed
+
+    private void loanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanButtonActionPerformed
+        // TODO add your handling code here:
+        BookLoanFrame loanFrame = new BookLoanFrame();
+        loanFrame.setVisible(true);
+        
+        Object actionSelection = JOptionPane.showInputDialog(null, 
+                "Elija un que desea hacer:", 
+                "Selection", JOptionPane.DEFAULT_OPTION, null, 
+                DefaultValues.MATERIAL_TYPE, "0");
+        if (actionSelection != null){ // Es nulo si no se scepta
+            String actionSelectionString = actionSelection.toString();
+            switch (actionSelectionString){
+                case "Registrar nuevo préstamo":
+                    Object loanTypeSelection = JOptionPane.showInputDialog(null, 
+                            "Elija el tipo de préstamo:", 
+                            "Selection", JOptionPane.DEFAULT_OPTION, null, 
+                            DefaultValues.MATERIAL_TYPE, "0");
+                    if (loanTypeSelection != null){ // Es nulo si no se scepta
+                        String loanTypeString = loanTypeSelection.toString();
+                        switch (loanTypeString){
+                            case "Reproductor multimedia":
+                                // MediaPlayer multimedia
+                                break;
+                            case "Multimedia":
+                                // Préstamo multimedia
+                                break;
+                            case "Libro":
+                                BookLoanFrame bookLoanFrame = new BookLoanFrame();
+                                bookLoanFrame.setVisible(true);
+                                break;
+                        }
+                    }
+                    break;
+                case "Terminar préstamo":
+                    // Frame de terminar préstamo
+                    break;
+            }
+        }
+        
+    }//GEN-LAST:event_loanButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -161,6 +161,19 @@ public class BookFile {
         return books;
     }//fin metodo
     
+    public int searchRecord(String id) throws IOException{
+        Book myBook = null;
+        
+        for(int i = 0; i < regsQuantity; i++){
+            myBook = this.getRecord(i);
+            if(myBook.getId().equalsIgnoreCase(id)){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
     public boolean deleteRecord(String id) throws IOException{
         Book myBook;
         

@@ -35,6 +35,8 @@ public class DefaultValues {
     public static String MEDIA_PLAYER_FILE_PATH = "./MediaPlayer.dat";
     public static String MEDIA_FILE_PATH = "./Media.dat";
     public static String BOOK_FILE_PATH = "./Book.dat";
+    public static String CHECK_ICON_PATH = "./src/resources/images/CHECK_ICON.png";
+    public static String WRONG_ICON_PATH = "./src/resources/images/WRONG_ICON.png";
     
     // Identificador de elemento borrado
     public static String DELETE_NAME_ON_RECORD = "delete";
@@ -46,6 +48,8 @@ public class DefaultValues {
     public static String MEDIA_PLAYER_ID_ERROR = "El número de identificación es inválido";
     public static String MEDIA_ID_ERROR = "El número de identificación es inválido";
     public static String FAILED_INSERT = "Error guardando sus datos";
+    public static String STUDENT_NOT_FOUND_ERROR = "El estudiante no se encuentra registrado en el sistema";
+    public static String FAILED_SEARCH = "No se puede realizar la búsqueda";
     
     // Funciones
     public static boolean checkId(String id){

@@ -139,6 +139,19 @@ public class StudentFile {
         return students;
     }//fin metodo
     
+    public int searchRecord(String id) throws IOException{
+        Student myStudent = null;
+        
+        for(int i = 0; i < regsQuantity; i++){
+            myStudent = this.getRecord(i);
+            if(myStudent.getId().equalsIgnoreCase(id)){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
     public boolean deleteRecord(String id) throws IOException{
         Student myStudent;
         

@@ -154,6 +154,19 @@ public class MediaFile {
         return medias;
     }//fin metodo
     
+    public int searchRecord(String id) throws IOException{
+        Media myMedia = null;
+        
+        for(int i = 0; i < regsQuantity; i++){
+            myMedia = this.getRecord(i);
+            if(myMedia.getId().equalsIgnoreCase(id)){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
     public boolean deleteRecord(String id) throws IOException{
         Media myMedia;
         
