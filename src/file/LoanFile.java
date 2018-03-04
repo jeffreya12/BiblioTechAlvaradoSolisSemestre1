@@ -114,31 +114,33 @@ public class LoanFile {
             Loan myLoan = new Loan();
             
             Date endDateTemp = new Date();
-            endDateTemp.setTime(randomAccessFile.readLong());
             
             //llevamos a cabo las lecturas
-            myLoan.setEndDate(endDateTemp);
+            endDateTemp.setTime(randomAccessFile.readLong());
             myLoan.setFinished(randomAccessFile.readBoolean());
             myLoan.setFee(randomAccessFile.readInt());
             myLoan.setStudent(studentFile.getRecord(randomAccessFile.readInt()));
             String loanType = randomAccessFile.readUTF();
+            int materialIndex = randomAccessFile.readInt();
                     
+            myLoan.setEndDate(endDateTemp);
+            
             switch(loanType){
                 case "Book":
                     BookFile bookFile = new BookFile(new File(DefaultValues.BOOK_FILE_PATH));
-                    myLoan.setMaterial(bookFile.getRecord(randomAccessFile.readInt()));
+                    myLoan.setMaterial(bookFile.getRecord(materialIndex));
                     bookFile.close();
                     break;
                     
                 case "Media":
                     MediaFile mediaFile = new MediaFile(new File(DefaultValues.MEDIA_FILE_PATH));
-                    myLoan.setMaterial(mediaFile.getRecord(randomAccessFile.readInt()));
+                    myLoan.setMaterial(mediaFile.getRecord(materialIndex));
                     mediaFile.close();
                     break;
                     
                 case "MediaPlayer":
                     MediaPlayerFile mediaPlayerFile = new MediaPlayerFile(new File(DefaultValues.MEDIA_PLAYER_FILE_PATH));
-                    myLoan.setMaterial(mediaPlayerFile.getRecord(randomAccessFile.readInt()));
+                    myLoan.setMaterial(mediaPlayerFile.getRecord(materialIndex));
                     mediaPlayerFile.close();
                     break;
             }

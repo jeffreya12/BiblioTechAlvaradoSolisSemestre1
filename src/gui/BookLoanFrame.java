@@ -276,7 +276,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
         TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
         booksTable.setRowSorter(tableRowSorter);
         
-        tableRowSorter.setRowFilter(RowFilter.regexFilter(query));
+        tableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
         
     }//GEN-LAST:event_searchBookButtonActionPerformed
 
@@ -300,10 +300,6 @@ public class BookLoanFrame extends javax.swing.JFrame {
                     File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
                     LoanFile loanFile = new LoanFile(fileLoan);
                     loanFile.addEndRecord(newLoan, studentIndex, bookIndex,
-                            DefaultValues.BOOK_CLASS_NAME);
-                    
-                    System.out.println(newLoan + String.valueOf(studentIndex) + 
-                            String.valueOf(bookIndex) + 
                             DefaultValues.BOOK_CLASS_NAME);
                     
                     loanFile.close();

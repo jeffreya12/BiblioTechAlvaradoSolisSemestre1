@@ -25,7 +25,7 @@ public class DefaultValues {
     public static int MEDIA_PLAYER_REG_SIZE = 500; // Tamanno de registro MediaPlayer
     public static int MEDIA_REG_SIZE = 500; // Tamanno de registro Media
     public static int BOOK_REG_SIZE = 1000; // Tamanno de registro Media
-    public static int LOAN_REG_SIZE = 1000; // Tamanno de registro de prestamos
+    public static int LOAN_REG_SIZE = 500; // Tamanno de registro de prestamos
     public static String[] MATERIAL_TYPE = {"Libro",
                                             "Multimedia",
                                             "Reproductor multimedia"

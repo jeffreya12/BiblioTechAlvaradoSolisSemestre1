@@ -30,7 +30,7 @@ public class LoanFileTest {
     
     @BeforeClass
     public static void setUpClass() throws IOException {
-        File fileLoan = new File(DefaultValues.BOOK_FILE_PATH);
+        File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
         loanFile = new LoanFile(fileLoan);
     }
     
