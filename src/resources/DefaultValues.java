@@ -39,10 +39,15 @@ public class DefaultValues {
                                                  "ISBN",
                                                  "Disponibles"
                                                 };
+    public static String[] MEDIA_TABLE_COLUMNS = {"Título",
+                                                 "Género",
+                                                 "Identificador",
+                                                 "Disponibles"
+                                                };
     
     public static String BOOK_CLASS_NAME = "Book";
-    public static String MEDIA_PLAYER_CLASS_NAME = "Media";
-    public static String MEDIA_CLASS_NAME = "MediaPlayer";
+    public static String MEDIA_PLAYER_CLASS_NAME = "MediaPlayer";
+    public static String MEDIA_CLASS_NAME = "Media";
     
     // Paths
     public static String STUDENT_FILE_PATH = "./Student.dat";

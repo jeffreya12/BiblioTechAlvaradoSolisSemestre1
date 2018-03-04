@@ -157,6 +157,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 break;
                             case "Multimedia":
                                 // Préstamo multimedia
+                                MediaLoanFrame mediaLoanFrame = new MediaLoanFrame();
+                                mediaLoanFrame.setVisible(true);
                                 break;
                             case "Libro":
                                 BookLoanFrame bookLoanFrame = new BookLoanFrame();
