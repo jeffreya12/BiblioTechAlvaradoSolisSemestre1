@@ -264,7 +264,7 @@ public class EnterBookFrame extends javax.swing.JFrame {
             }
             catch(Exception e){
                 System.err.println(e.toString());
-                JOptionPane.showMessageDialog(this, DefaultValues.FAILED_INSERT);
+                JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
             }
             
         }

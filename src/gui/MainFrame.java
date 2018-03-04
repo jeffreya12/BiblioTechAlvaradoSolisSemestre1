@@ -136,14 +136,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_materialButtonActionPerformed
 
     private void loanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanButtonActionPerformed
-        // TODO add your handling code here:
-        BookLoanFrame loanFrame = new BookLoanFrame();
-        loanFrame.setVisible(true);
-        
+        // TODO add your handling code here:        
         Object actionSelection = JOptionPane.showInputDialog(null, 
                 "Elija un que desea hacer:", 
                 "Selection", JOptionPane.DEFAULT_OPTION, null, 
-                DefaultValues.MATERIAL_TYPE, "0");
+                DefaultValues.LOAN_ACTIONS, "0");
         if (actionSelection != null){ // Es nulo si no se scepta
             String actionSelectionString = actionSelection.toString();
             switch (actionSelectionString){

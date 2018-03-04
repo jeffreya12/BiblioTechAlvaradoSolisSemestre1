@@ -5,12 +5,20 @@
  */
 package gui;
 
+import domain.Book;
+import domain.Loan;
 import domain.Student;
+import file.BookFile;
+import file.LoanFile;
 import file.StudentFile;
 import java.io.File;
-import javax.swing.Icon;
+import java.util.Date;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import resources.DefaultValues;
 
 /**
@@ -21,6 +29,10 @@ public class BookLoanFrame extends javax.swing.JFrame {
 
     
     private boolean studentExist;
+    private int studentIndex;
+    private DefaultTableModel tableModel;
+    private BookFile bookFile;
+    private StudentFile studentFile;
     
     /**
      * Creates new form LoanFrame
@@ -28,7 +40,29 @@ public class BookLoanFrame extends javax.swing.JFrame {
     public BookLoanFrame() {
         initComponents();
         
-        studentExist = false;        
+        studentExist = false;
+        
+        tableModel = new DefaultTableModel(DefaultValues.BOOK_TABLE_COLUMNS, 0);
+        
+        try{
+            File fileBook = new File(DefaultValues.BOOK_FILE_PATH);
+            bookFile = new BookFile(fileBook);
+            List<Book> books = bookFile.getAllRecords();
+            for(Book currentBook : books){
+                Object row[] = { currentBook.getTitle(), currentBook.getAuthor(),
+                                 currentBook.getFormat(), currentBook.getId(),
+                                 currentBook.getAvailable()
+                               };
+                tableModel.addRow(row);
+            }
+            booksTable.setModel(tableModel);
+        }
+        catch(Exception e){
+            System.err.println(e.toString());
+            JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
+        }
+        
+        endDatePicker.setDate(new Date());
         
     }
 
@@ -46,9 +80,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
         idStudentTextField = new javax.swing.JTextField();
         idStudentComboBox = new javax.swing.JComboBox<>();
         bookTitleLabel = new javax.swing.JLabel();
-        bookTitleTextField = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        bookList = new javax.swing.JList<>();
+        bookSearchTextField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         verifyStudentButton = new javax.swing.JButton();
@@ -56,6 +88,8 @@ public class BookLoanFrame extends javax.swing.JFrame {
         verificationLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         endDatePicker = new org.jdesktop.swingx.JXDatePicker();
+        jScrollPane = new javax.swing.JScrollPane();
+        booksTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,9 +103,12 @@ public class BookLoanFrame extends javax.swing.JFrame {
 
         bookTitleLabel.setText("Título del libro");
 
-        jScrollPane1.setViewportView(bookList);
-
         submitButton.setText("Aceptar");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancelar");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -88,47 +125,67 @@ public class BookLoanFrame extends javax.swing.JFrame {
         });
 
         searchBookButton.setText("Buscar");
+        searchBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBookButtonActionPerformed(evt);
+            }
+        });
 
         verificationLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/WRONG_ICON.png"))); // NOI18N
 
         dateLabel.setText("Fecha de finalización");
 
+        booksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane.setViewportView(booksTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(frameTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(idStudentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                            .addComponent(bookTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(idStudentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(idStudentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(verificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 8, Short.MAX_VALUE))
-                            .addComponent(bookTitleTextField))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(verifyStudentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(searchBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(submitButton))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(endDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(endDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(idStudentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(bookTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(idStudentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(idStudentTextField)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(verificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(bookSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(verifyStudentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(searchBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cancelButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(submitButton)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -136,33 +193,36 @@ public class BookLoanFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(frameTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idStudentLabel)
-                            .addComponent(idStudentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(idStudentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(verifyStudentButton)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(verificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bookTitleLabel)
-                    .addComponent(bookTitleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchBookButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(idStudentLabel)
+                                    .addComponent(idStudentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(idStudentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(verificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bookTitleLabel)
+                            .addComponent(bookSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(verifyStudentButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchBookButton)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(endDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(cancelButton))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -175,26 +235,25 @@ public class BookLoanFrame extends javax.swing.JFrame {
         String id = idStudentComboBox.getSelectedItem().toString() +
                     idStudentTextField.getText();
         
-        ImageIcon verifiedIcon;
+        ImageIcon verificationIcon;
         
         try {
             File fileStudent = new File(DefaultValues.STUDENT_FILE_PATH);
-            StudentFile studentFile = new StudentFile(fileStudent);
+            studentFile = new StudentFile(fileStudent);
+            studentIndex = studentFile.searchRecord(id);
             
-            if (studentFile.searchRecord(id) != -1 ){
-                verifiedIcon = new ImageIcon(DefaultValues.CHECK_ICON_PATH);
-                verificationLabel.setIcon(verifiedIcon);
+            if (studentIndex != -1 ){
+                verificationIcon = new ImageIcon(DefaultValues.CHECK_ICON_PATH);
+                verificationLabel.setIcon(verificationIcon);
                 studentExist = true;
             }
             
             else{
-                verifiedIcon = new ImageIcon(DefaultValues.WRONG_ICON_PATH);
-                verificationLabel.setIcon(verifiedIcon);
+                verificationIcon = new ImageIcon(DefaultValues.WRONG_ICON_PATH);
+                verificationLabel.setIcon(verificationIcon);
                 studentExist = false;
                 JOptionPane.showMessageDialog(this, DefaultValues.STUDENT_NOT_FOUND_ERROR);
             }
-            
-            studentFile.close();
         }
         catch (Exception e){
             System.err.println(e.toString());
@@ -208,6 +267,71 @@ public class BookLoanFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void searchBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookButtonActionPerformed
+        // TODO add your handling code here:
+        
+        String query = bookSearchTextField.getText().toLowerCase();
+        
+        TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
+        booksTable.setRowSorter(tableRowSorter);
+        
+        tableRowSorter.setRowFilter(RowFilter.regexFilter(query));
+        
+    }//GEN-LAST:event_searchBookButtonActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+        
+        String bookId = booksTable.getValueAt(booksTable.getSelectedRow(), 3).toString();
+        int available = Integer.parseInt(booksTable.getValueAt(booksTable.getSelectedRow(), 4).toString());
+        Date endLoanDate = endDatePicker.getDate();
+        
+        if (available > 0 && studentExist){
+            try{
+                int bookIndex = bookFile.searchRecord(bookId);
+                Book book = bookFile.getRecord(bookIndex);
+                Student student = studentFile.getRecord(studentIndex);
+                
+                Loan newLoan = new Loan(student, book, endLoanDate);
+                
+                
+                try{
+                    File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
+                    LoanFile loanFile = new LoanFile(fileLoan);
+                    loanFile.addEndRecord(newLoan, studentIndex, bookIndex,
+                            DefaultValues.BOOK_CLASS_NAME);
+                    
+                    System.out.println(newLoan + String.valueOf(studentIndex) + 
+                            String.valueOf(bookIndex) + 
+                            DefaultValues.BOOK_CLASS_NAME);
+                    
+                    loanFile.close();
+
+                    this.dispose();
+                }
+                catch(Exception e){
+                    System.err.println(e.toString());
+                    JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
+                }
+                
+                studentFile.close();
+                bookFile.close();
+                
+                this.dispose();
+                
+            }
+            catch(Exception e){
+                System.err.println(e.toString());
+                JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, DefaultValues.INVALID_OPTIONS);
+        }
+        
+        
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,9 +370,9 @@ public class BookLoanFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> bookList;
+    private javax.swing.JTextField bookSearchTextField;
     private javax.swing.JLabel bookTitleLabel;
-    private javax.swing.JTextField bookTitleTextField;
+    private javax.swing.JTable booksTable;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel dateLabel;
     private org.jdesktop.swingx.JXDatePicker endDatePicker;
@@ -256,7 +380,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> idStudentComboBox;
     private javax.swing.JLabel idStudentLabel;
     private javax.swing.JTextField idStudentTextField;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JButton searchBookButton;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel verificationLabel;

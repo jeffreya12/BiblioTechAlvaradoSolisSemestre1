@@ -7,11 +7,9 @@ package gui;
 
 import domain.MediaPlayer;
 import file.MediaPlayerFile;
-import file.StudentFile;
 import java.io.File;
 import javax.swing.JOptionPane;
 import resources.DefaultValues;
-import sun.management.jmxremote.ConnectorBootstrap;
 
 /**
  *

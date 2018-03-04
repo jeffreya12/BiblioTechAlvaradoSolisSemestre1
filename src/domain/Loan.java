@@ -15,16 +15,24 @@ public class Loan {
     
     private Student student;
     private Material material;
-    private Date date;
+    private Date endDate;
     private boolean finished;
     private int fee;
 
     public Loan(Student student, Material material, Date date, boolean finished, int fee) {
         this.student = student;
         this.material = material;
-        this.date = date;
+        this.endDate = date;
         this.finished = finished;
         this.fee = fee;
+    }
+    
+    public Loan(Student student, Material material, Date date) {
+        this.student = student;
+        this.material = material;
+        this.endDate = date;
+        this.finished = false;
+        this.fee = 0;
     }
 
     public Loan() {
@@ -38,8 +46,8 @@ public class Loan {
         return material;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getEndDate() {
+        return endDate;
     }
 
     public boolean isFinished() {
@@ -58,8 +66,8 @@ public class Loan {
         this.material = material;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setEndDate(Date date) {
+        this.endDate = date;
     }
 
     public void setFinished(boolean finished) {
@@ -69,7 +77,22 @@ public class Loan {
     public void setFee(int fee) {
         this.fee = fee;
     }
+
+    @Override
+    public String toString() {
+        return "Loan{" + "student=" + student.toString() 
+                + ", material=" + material.toString() 
+                + ", date=" + endDate + ", finished=" 
+                + finished + ", fee=" + fee + '}';
+    }
     
-    
+    public int size(){
+        return 8 //Date size
+               + 8 //Finished size
+               + 4 //Fee size
+               + 4 //Student index size
+               + 11 * 2 //Type size
+               + 4; //Material index size
+    }
     
 }

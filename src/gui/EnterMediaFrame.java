@@ -46,7 +46,7 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         idTextField = new javax.swing.JTextField();
         quantitySpinner = new javax.swing.JSpinner();
         publishedDatePicker = new org.jdesktop.swingx.JXDatePicker();
-        jButton1 = new javax.swing.JButton();
+        submitButton = new javax.swing.JButton();
         descriptionLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
@@ -79,10 +79,10 @@ public class EnterMediaFrame extends javax.swing.JFrame {
 
         publishedDatePicker.setDate(new Date());
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        submitButton.setText("Guardar");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                submitButtonActionPerformed(evt);
             }
         });
 
@@ -111,7 +111,7 @@ public class EnterMediaFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(submitButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
@@ -166,7 +166,7 @@ public class EnterMediaFrame extends javax.swing.JFrame {
                     .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(submitButton)
                     .addComponent(cancelButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -184,7 +184,7 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         String title = titleTextField.getText();
         String genre = genreTextField.getText();
@@ -215,7 +215,7 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(this, DefaultValues.MEDIA_ID_ERROR);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,12 +264,12 @@ public class EnterMediaFrame extends javax.swing.JFrame {
     private javax.swing.JTextField genreTextField;
     private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idTextField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private org.jdesktop.swingx.JXDatePicker publishedDatePicker;
     private javax.swing.JLabel publishedLabel;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JSpinner quantitySpinner;
+    private javax.swing.JButton submitButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JTextField titleTextField;
     // End of variables declaration//GEN-END:variables
