@@ -5,10 +5,10 @@
  */
 package gui;
 
-import domain.Book;
+import domain.MediaPlayer;
 import domain.Loan;
 import domain.Student;
-import file.BookFile;
+import file.MediaPlayerFile;
 import file.LoanFile;
 import file.StudentFile;
 import java.io.File;
@@ -25,37 +25,37 @@ import resources.DefaultValues;
  *
  * @author jefal
  */
-public class BookLoanFrame extends javax.swing.JFrame {
+public class MediaPlayerLoanFrame extends javax.swing.JFrame {
 
     
     private boolean studentExist;
     private int studentIndex;
     private DefaultTableModel tableModel;
-    private BookFile bookFile;
+    private MediaPlayerFile mediaPlayerFile;
     private StudentFile studentFile;
     
     /**
      * Creates new form LoanFrame
      */
-    public BookLoanFrame() {
+    public MediaPlayerLoanFrame() {
         initComponents();
         
         studentExist = false;
         
-        tableModel = new DefaultTableModel(DefaultValues.BOOK_TABLE_COLUMNS, 0);
+        tableModel = new DefaultTableModel(DefaultValues.MEDIA_PLAYER_TABLE_COLUMNS, 0);
         
         try{
-            File fileBook = new File(DefaultValues.BOOK_FILE_PATH);
-            bookFile = new BookFile(fileBook);
-            List<Book> books = bookFile.getAllRecords();
-            for(Book currentBook : books){
-                Object row[] = { currentBook.getTitle(), currentBook.getAuthor(),
-                                 currentBook.getFormat(), currentBook.getId(),
-                                 currentBook.getAvailable()
+            File fileMediaPlayer = new File(DefaultValues.MEDIA_PLAYER_FILE_PATH);
+            mediaPlayerFile = new MediaPlayerFile(fileMediaPlayer);
+            List<MediaPlayer> mediaPlayers = mediaPlayerFile.getAllRecords();
+            for(MediaPlayer currentMediaPlayer : mediaPlayers){
+                Object row[] = { currentMediaPlayer.getBrand(), currentMediaPlayer.getModel(),
+                                 currentMediaPlayer.getKind(), currentMediaPlayer.getId(),
+                                 currentMediaPlayer.getAvailable()
                                };
                 tableModel.addRow(row);
             }
-            booksTable.setModel(tableModel);
+            mediaPlayersTable.setModel(tableModel);
         }
         catch(Exception e){
             System.err.println(e.toString());
@@ -79,17 +79,17 @@ public class BookLoanFrame extends javax.swing.JFrame {
         idStudentLabel = new javax.swing.JLabel();
         idStudentTextField = new javax.swing.JTextField();
         idStudentComboBox = new javax.swing.JComboBox<>();
-        bookTitleLabel = new javax.swing.JLabel();
-        bookSearchTextField = new javax.swing.JTextField();
+        mediaPlayerTitleLabel = new javax.swing.JLabel();
+        mediaPlayerSearchTextField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         verifyStudentButton = new javax.swing.JButton();
-        searchBookButton = new javax.swing.JButton();
+        searchMediaPlayerButton = new javax.swing.JButton();
         verificationLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         endDatePicker = new org.jdesktop.swingx.JXDatePicker();
         jScrollPane = new javax.swing.JScrollPane();
-        booksTable = new javax.swing.JTable();
+        mediaPlayersTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,7 +101,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
 
         idStudentComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IC", "IM", "IE" }));
 
-        bookTitleLabel.setText("Búsqueda");
+        mediaPlayerTitleLabel.setText("Búsqueda");
 
         submitButton.setText("Aceptar");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -124,10 +124,10 @@ public class BookLoanFrame extends javax.swing.JFrame {
             }
         });
 
-        searchBookButton.setText("Buscar");
-        searchBookButton.addActionListener(new java.awt.event.ActionListener() {
+        searchMediaPlayerButton.setText("Buscar");
+        searchMediaPlayerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBookButtonActionPerformed(evt);
+                searchMediaPlayerButtonActionPerformed(evt);
             }
         });
 
@@ -135,7 +135,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
 
         dateLabel.setText("Fecha de finalización");
 
-        booksTable.setModel(new javax.swing.table.DefaultTableModel(
+        mediaPlayersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -146,7 +146,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane.setViewportView(booksTable);
+        jScrollPane.setViewportView(mediaPlayersTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,7 +168,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(idStudentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(bookTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mediaPlayerTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
@@ -177,11 +177,11 @@ public class BookLoanFrame extends javax.swing.JFrame {
                                             .addComponent(idStudentTextField)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(verificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(bookSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mediaPlayerSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(verifyStudentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(searchBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(searchMediaPlayerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cancelButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,12 +206,12 @@ public class BookLoanFrame extends javax.swing.JFrame {
                             .addComponent(verificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bookTitleLabel)
-                            .addComponent(bookSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(mediaPlayerTitleLabel)
+                            .addComponent(mediaPlayerSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(verifyStudentButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchBookButton)))
+                        .addComponent(searchMediaPlayerButton)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -268,44 +268,44 @@ public class BookLoanFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void searchBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookButtonActionPerformed
+    private void searchMediaPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMediaPlayerButtonActionPerformed
         // TODO add your handling code here:
         
-        String query = bookSearchTextField.getText().toLowerCase();
+        String query = mediaPlayerSearchTextField.getText().toLowerCase();
         
         TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
-        booksTable.setRowSorter(tableRowSorter);
+        mediaPlayersTable.setRowSorter(tableRowSorter);
         
         tableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
         
-    }//GEN-LAST:event_searchBookButtonActionPerformed
+    }//GEN-LAST:event_searchMediaPlayerButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         
-        String bookId = booksTable.getValueAt(booksTable.getSelectedRow(), 3).toString();
-        int available = Integer.parseInt(booksTable.getValueAt(booksTable.getSelectedRow(), 4).toString());
+        String mediaPlayerId = mediaPlayersTable.getValueAt(mediaPlayersTable.getSelectedRow(), 3).toString();
+        int available = Integer.parseInt(mediaPlayersTable.getValueAt(mediaPlayersTable.getSelectedRow(), 4).toString());
         Date endLoanDate = endDatePicker.getDate();
         
         if (available > 0 && studentExist){
             try{
-                int bookIndex = bookFile.searchRecord(bookId);
-                Book book = bookFile.getRecord(bookIndex);
+                int mediaPlayerIndex = mediaPlayerFile.searchRecord(mediaPlayerId);
+                MediaPlayer mediaPlayer = mediaPlayerFile.getRecord(mediaPlayerIndex);
                 Student student = studentFile.getRecord(studentIndex);
                 
-                Loan newLoan = new Loan(student, book, endLoanDate);
+                Loan newLoan = new Loan(student, mediaPlayer, endLoanDate);
                 
                 
                 try{
                     File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
                     LoanFile loanFile = new LoanFile(fileLoan);
-                    loanFile.addEndRecord(newLoan, studentIndex, bookIndex,
-                            DefaultValues.BOOK_CLASS_NAME);
+                    loanFile.addEndRecord(newLoan, studentIndex, mediaPlayerIndex,
+                            DefaultValues.MEDIA_PLAYER_CLASS_NAME);
                     
                     loanFile.close();
                     
-                    book.setAvailable(available - 1);
-                    bookFile.putValue(bookIndex, book);
+                    mediaPlayer.setAvailable(available - 1);
+                    mediaPlayerFile.putValue(mediaPlayerIndex, mediaPlayer);
 
                     this.dispose();
                 }
@@ -315,7 +315,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
                 }
                 
                 studentFile.close();
-                bookFile.close();
+                mediaPlayerFile.close();
                 
                 this.dispose();
                 
@@ -349,29 +349,28 @@ public class BookLoanFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BookLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MediaPlayerLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BookLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MediaPlayerLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BookLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MediaPlayerLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BookLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MediaPlayerLoanFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BookLoanFrame().setVisible(true);
+                new MediaPlayerLoanFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField bookSearchTextField;
-    private javax.swing.JLabel bookTitleLabel;
-    private javax.swing.JTable booksTable;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel dateLabel;
     private org.jdesktop.swingx.JXDatePicker endDatePicker;
@@ -380,7 +379,10 @@ public class BookLoanFrame extends javax.swing.JFrame {
     private javax.swing.JLabel idStudentLabel;
     private javax.swing.JTextField idStudentTextField;
     private javax.swing.JScrollPane jScrollPane;
-    private javax.swing.JButton searchBookButton;
+    private javax.swing.JTextField mediaPlayerSearchTextField;
+    private javax.swing.JLabel mediaPlayerTitleLabel;
+    private javax.swing.JTable mediaPlayersTable;
+    private javax.swing.JButton searchMediaPlayerButton;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel verificationLabel;
     private javax.swing.JButton verifyStudentButton;

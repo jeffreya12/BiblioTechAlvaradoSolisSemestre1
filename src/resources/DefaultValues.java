@@ -43,7 +43,13 @@ public class DefaultValues {
                                                  "Género",
                                                  "Identificador",
                                                  "Disponibles"
-                                                };
+                                                 };
+    public static String[] MEDIA_PLAYER_TABLE_COLUMNS = {"Marca",
+                                                        "Modelo",
+                                                        "Tipo",
+                                                        "Identificador",
+                                                        "Disponibles"
+                                                        };
     
     public static String BOOK_CLASS_NAME = "Book";
     public static String MEDIA_PLAYER_CLASS_NAME = "MediaPlayer";

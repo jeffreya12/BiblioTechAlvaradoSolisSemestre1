@@ -102,7 +102,7 @@ public class MediaLoanFrame extends javax.swing.JFrame {
 
         idStudentComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IC", "IM", "IE" }));
 
-        mediaTitleLabel.setText("Título del libro");
+        mediaTitleLabel.setText("Búsqueda");
 
         submitButton.setText("Aceptar");
         submitButton.addActionListener(new java.awt.event.ActionListener() {

@@ -153,7 +153,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="bookTitleLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="T&#xed;tulo del libro"/>
+        <Property name="text" type="java.lang.String" value="B&#xfa;squeda"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="bookSearchTextField">

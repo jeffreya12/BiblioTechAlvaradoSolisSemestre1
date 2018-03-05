@@ -154,6 +154,8 @@ public class MainFrame extends javax.swing.JFrame {
                         switch (loanTypeString){
                             case "Reproductor multimedia":
                                 // MediaPlayer multimedia
+                                MediaPlayerLoanFrame mediaPlayerLoanFrame = new MediaPlayerLoanFrame();
+                                mediaPlayerLoanFrame.setVisible(true);
                                 break;
                             case "Multimedia":
                                 // Préstamo multimedia
