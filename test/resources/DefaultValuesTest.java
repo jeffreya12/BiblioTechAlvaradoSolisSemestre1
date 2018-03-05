@@ -60,4 +60,12 @@ public class DefaultValuesTest {
         System.out.println("Days= " + DefaultValues.daysBetween(cal1.getTime(), cal2.getTime()));
     }
     
+    /**
+     * Test of daysBetween method, of class DefaultValues.
+     */
+    @Test
+    public void testSaveSettings() {
+        DefaultValues.saveSetting("password", "12345");
+    }
+    
 }

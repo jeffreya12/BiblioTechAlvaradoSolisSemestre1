@@ -37,6 +37,7 @@ public class MainFrame extends javax.swing.JFrame {
         studentsModuleLabel = new javax.swing.JLabel();
         materialModuleLabel = new javax.swing.JLabel();
         loanModuleLabel = new javax.swing.JLabel();
+        settingsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BiblioTech");
@@ -86,6 +87,13 @@ public class MainFrame extends javax.swing.JFrame {
         loanModuleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loanModuleLabel.setText("Manejo de préstamos");
 
+        settingsButton.setText("Configuración");
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,15 +116,20 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(loanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(loanModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(loanModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(settingsButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(settingsButton)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(studentsModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                     .addComponent(materialModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -208,6 +221,12 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_loanButtonActionPerformed
 
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        // TODO add your handling code here:
+        SettingsFrame settingsFrame = new SettingsFrame();
+        settingsFrame.setVisible(true);
+    }//GEN-LAST:event_settingsButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,6 +271,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel loanModuleLabel;
     private javax.swing.JButton materialButton;
     private javax.swing.JLabel materialModuleLabel;
+    private javax.swing.JButton settingsButton;
     private javax.swing.JButton studentsButton;
     private javax.swing.JLabel studentsModuleLabel;
     private javax.swing.JLabel titleLabel;

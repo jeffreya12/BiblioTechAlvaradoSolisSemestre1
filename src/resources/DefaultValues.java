@@ -5,7 +5,10 @@
  */
 package resources;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  *
@@ -60,6 +63,8 @@ public class DefaultValues {
     
     public static String IS_FINISHED_STATE = "Finalizado";
     public static String IS_NOT_FINISHED_STATE = "Activo";
+    public static String PASSWORD_SETTINGS_KEY = "password";
+    public static String FEE_PER_DAY_SETTINGS_KEY = "fee_per_day";
     
     // Paths
     public static String STUDENT_FILE_PATH = "./Student.dat";
@@ -69,6 +74,7 @@ public class DefaultValues {
     public static String LOAN_FILE_PATH = "./Loan.dat";
     public static String CHECK_ICON_PATH = "./src/resources/images/CHECK_ICON.png";
     public static String WRONG_ICON_PATH = "./src/resources/images/WRONG_ICON.png";
+    public static String SETTINGS_PATH = "./src/resources/xml/settings.xml";
     
     // Identificador de elemento borrado
     public static String DELETE_NAME_ON_RECORD = "delete";
@@ -87,6 +93,7 @@ public class DefaultValues {
     public static String FEE_PAYMENT_WARNING = "Debe cancelar el siguiente monto para terminar el préstamo\n\n₡";
     public static String FEE_PAYMENT_CONFIRMATION = "\n\n¿Desea terminar el préstamo?";
     public static String END_FINISHED_LOAN = "El préstamo ya se devolvió";
+    public static String SAVE_SETTINGS_SUCCESSFUL = "Sus cambios se guardaron correctamente";
     
     // Funciones
     public static boolean checkId(String id){
@@ -107,5 +114,32 @@ public class DefaultValues {
     }
     public static int daysBetween(Date d1, Date d2){
         return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+    public static boolean saveSetting(String password, String fee){
+        // Save Settings
+        Properties saveProps = new Properties();
+        saveProps.setProperty(DefaultValues.PASSWORD_SETTINGS_KEY, password);
+        saveProps.setProperty(DefaultValues.FEE_PER_DAY_SETTINGS_KEY, fee);
+        try {
+            saveProps.storeToXML(new FileOutputStream(SETTINGS_PATH), "");
+            return true;
+        }
+        catch (Exception e) {
+            System.err.println(e.toString());
+            return false;
+        }
+    }
+    public static String loadSetting(String key){
+        // Load Settings
+        Properties loadProps = new Properties();
+        try{
+            loadProps.loadFromXML(new FileInputStream(SETTINGS_PATH));
+            return loadProps.getProperty(key);
+        }
+        catch(Exception e){
+            System.err.println(e.toString());
+            return "";
+        }
+        
     }
 }
