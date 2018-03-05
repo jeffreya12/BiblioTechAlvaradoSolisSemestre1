@@ -5,10 +5,7 @@
  */
 package resources;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.Date;
 
 /**
  *
@@ -50,10 +47,19 @@ public class DefaultValues {
                                                         "Identificador",
                                                         "Disponibles"
                                                         };
+    public static String[] LOAN_TABLE_COLUMNS = {"Estudiante",
+                                                "Material",
+                                                "Tipo",
+                                                "Estado del préstamo",
+                                                "Fecha de finalización"
+                                                };
     
-    public static String BOOK_CLASS_NAME = "Book";
-    public static String MEDIA_PLAYER_CLASS_NAME = "MediaPlayer";
-    public static String MEDIA_CLASS_NAME = "Media";
+    public static final String BOOK_CLASS_NAME = "Book";
+    public static final String MEDIA_PLAYER_CLASS_NAME = "MediaPlayer";
+    public static final String MEDIA_CLASS_NAME = "Media";
+    
+    public static String IS_FINISHED_STATE = "Finalizado";
+    public static String IS_NOT_FINISHED_STATE = "Activo";
     
     // Paths
     public static String STUDENT_FILE_PATH = "./Student.dat";
@@ -78,6 +84,9 @@ public class DefaultValues {
     public static String FAILED_SEARCH = "No se puede realizar la búsqueda";
     public static String DEFAULT_QUERY_ERROR = "No se puede realizar la acción en este momento";
     public static String INVALID_OPTIONS = "Verifique el estudiante y elija un material que esté disponible";
+    public static String FEE_PAYMENT_WARNING = "Debe cancelar el siguiente monto para terminar el préstamo\n\n₡";
+    public static String FEE_PAYMENT_CONFIRMATION = "\n\n¿Desea terminar el préstamo?";
+    public static String END_FINISHED_LOAN = "El préstamo ya se devolvió";
     
     // Funciones
     public static boolean checkId(String id){
@@ -95,5 +104,8 @@ public class DefaultValues {
             isCorrect = false;
         }
         return isCorrect;
+    }
+    public static int daysBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 }

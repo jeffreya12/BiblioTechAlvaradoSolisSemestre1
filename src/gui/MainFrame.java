@@ -171,6 +171,8 @@ public class MainFrame extends javax.swing.JFrame {
                     break;
                 case "Terminar préstamo":
                     // Frame de terminar préstamo
+                    EndLoan endLoan = new EndLoan();
+                    endLoan.setVisible(true);
                     break;
             }
         }
