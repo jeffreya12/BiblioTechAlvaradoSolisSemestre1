@@ -29,33 +29,33 @@ public class DefaultValues {
     public static String[] MATERIAL_TYPE = {"Libro",
                                             "Multimedia",
                                             "Reproductor multimedia"
-                                           };
+                                           }; //Tipos de material
     public static String[] LOAN_ACTIONS = {"Registrar nuevo préstamo",
                                             "Terminar préstamo"
-                                          };
+                                          }; //Acciones de la ventana de prestamo
     public static String[] BOOK_TABLE_COLUMNS = {"Título",
                                                  "Autor",
                                                  "Formato",
                                                  "ISBN",
                                                  "Disponibles"
-                                                };
+                                                };//Columnas de la tabla de libros
     public static String[] MEDIA_TABLE_COLUMNS = {"Título",
                                                  "Género",
                                                  "Identificador",
                                                  "Disponibles"
-                                                 };
+                                                 };//Columnas de la tabla de medios
     public static String[] MEDIA_PLAYER_TABLE_COLUMNS = {"Marca",
                                                         "Modelo",
                                                         "Tipo",
                                                         "Identificador",
                                                         "Disponibles"
-                                                        };
+                                                        };//Columnas de la tabla de reproductores
     public static String[] LOAN_TABLE_COLUMNS = {"Estudiante",
                                                 "Material",
                                                 "Tipo",
                                                 "Estado del préstamo",
                                                 "Fecha de finalización"
-                                                };
+                                                };//Columnas de la tabla de prestamos
     
     public static final String BOOK_CLASS_NAME = "Book";
     public static final String MEDIA_PLAYER_CLASS_NAME = "MediaPlayer";
@@ -96,10 +96,14 @@ public class DefaultValues {
     public static String SAVE_SETTINGS_SUCCESSFUL = "Sus cambios se guardaron correctamente";
     
     // Funciones
+    
+    //Verifica que el id contenga numeros y sea mayor a 5
     public static boolean checkId(String id){
         boolean isCorrect;
+        //Si es mayor a 5
         if(id.length() >= 5){
             try{
+                //Si es numero
                 Integer.parseInt(id);
                 isCorrect = true;
             }
@@ -112,15 +116,21 @@ public class DefaultValues {
         }
         return isCorrect;
     }
-    public static int daysBetween(Date d1, Date d2){
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    
+    //Calcula los dias entre dos fechas
+    public static int daysBetween(Date initialDate, Date endDate){
+        //Toma los Long del tipo fecha y los resta
+        return (int)( (endDate.getTime() - initialDate.getTime()) / (1000 * 60 * 60 * 24));
     }
+    
+    //Guarda los valores en el xml
     public static boolean saveSetting(String password, String fee){
-        // Save Settings
+        // Propiedades a guardar
         Properties saveProps = new Properties();
         saveProps.setProperty(DefaultValues.PASSWORD_SETTINGS_KEY, password);
         saveProps.setProperty(DefaultValues.FEE_PER_DAY_SETTINGS_KEY, fee);
         try {
+            //Guarda la contrasenna y la multa
             saveProps.storeToXML(new FileOutputStream(SETTINGS_PATH), "");
             return true;
         }
@@ -129,10 +139,13 @@ public class DefaultValues {
             return false;
         }
     }
+    
+    //Consulta el setting deseado con base en su identificador
     public static String loadSetting(String key){
-        // Load Settings
+        // Propiedades a consultar
         Properties loadProps = new Properties();
         try{
+            //Consulta el setting y lo devuelve
             loadProps.loadFromXML(new FileInputStream(SETTINGS_PATH));
             return loadProps.getProperty(key);
         }

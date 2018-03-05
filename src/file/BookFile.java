@@ -16,7 +16,8 @@ import resources.DefaultValues;
 
 /**
  *
- * @author jefal
+ * Archivo de manipulacion del RAF de la clase Book
+ * 
  */
 public class BookFile {
     
@@ -29,7 +30,6 @@ public class BookFile {
         start(file);
     }
     
-    
     private void start(File file) throws IOException{
         //almaceno la ruta
         myFilePath = file.getPath();
@@ -38,19 +38,19 @@ public class BookFile {
         //clase
         this.regSize = DefaultValues.BOOK_REG_SIZE;
         
-        //una validacion basica
+        //valida que exista el archivo
         if(file.exists() && !file.isFile()){
             throw new IOException(file.getName() 
                     + " is an invalid file");
         }
         else{
-            //crear la nueva instancia de randomAccessFile
+            //crear la nueva instancia de RAF con lectura y escritura
             randomAccessFile = new RandomAccessFile(file, "rw");
             
             //necesitamos indicar cuantos registros tiene el archivo
             this.regsQuantity = (int)Math.ceil((double)randomAccessFile.length() / (double)regSize);
         }
-    }//fin start
+    }
     
     public void close() throws IOException{
         randomAccessFile.close();
@@ -60,6 +60,7 @@ public class BookFile {
         return regsQuantity;
     }
     
+    //Insertar en una posicion especifica
     public boolean putValue(int position, Book book) throws IOException{
         //una pequenna validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
@@ -91,10 +92,10 @@ public class BookFile {
                 return false;
         }
         
-    }//fin metodo
+    }
     
+    //insertar al final del archivo
     public boolean addEndRecord(Book book) throws IOException{
-        //insertar al final del archivo
         boolean success = putValue(regsQuantity, book);
         
         if(success){
@@ -103,15 +104,17 @@ public class BookFile {
         return success;
     }
     
+    //Devuelve un objeto de una posicion en el RAF
     public Book getRecord(int position) throws IOException{
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
             //colocamos el puntero en el lugar 
             randomAccessFile.seek(position * regSize);
             
-            //instancia de person
+            //instancia de Book
             Book myBook = new Book();
             
+            //Variable temporal para almacenar la fecha
             Date publishedTemp = new Date();
             
             //llevamos a cabo las lecturas            
@@ -120,16 +123,14 @@ public class BookFile {
             myBook.setFormat(randomAccessFile.readUTF());
             myBook.setTitle(randomAccessFile.readUTF());
             myBook.setGenre(randomAccessFile.readUTF());
-            
             publishedTemp.setTime(randomAccessFile.readLong());
-            
             myBook.setPublished(publishedTemp);
             myBook.setDescription(randomAccessFile.readUTF());
             myBook.setId(randomAccessFile.readUTF());
             myBook.setQuantity(randomAccessFile.readInt());
             myBook.setAvailable(randomAccessFile.readInt());
             
-            //si es delete no retorno
+            //si es delete, retorna null
             if(myBook.getId().equalsIgnoreCase(DefaultValues.DELETE_NAME_ON_RECORD)){
                 return null;
             }
@@ -142,14 +143,15 @@ public class BookFile {
             System.err.println("6001 position is out of bounds");
             return null;
         }
-    }//fin de metodo
+    }
     
+    //Devuelve todos los objetos del RAF
     public List<Book> getAllRecords() throws IOException{
         
-        //variables a retornar
+        //variable a retornar
         List<Book> books = new ArrayList<Book>();
         
-        //recorro todos mis registros y los inserto en la lista
+        //recorro todos los registros y los inserta en la lista
         for(int i = 0; i < regsQuantity; i++){
             Book bookTemp = this.getRecord(i);
             
@@ -159,21 +161,27 @@ public class BookFile {
         }
         
         return books;
-    }//fin metodo
+    }
     
+    // Busca un objeto basado en su ID
     public int searchRecord(String id) throws IOException{
         Book myBook = null;
         
+        // Recorro la lista de objetos en busca del ID
         for(int i = 0; i < regsQuantity; i++){
+            //Obtiene el registro
             myBook = this.getRecord(i);
             if(myBook.getId().equalsIgnoreCase(id)){
+                //Si el ID existe, retorna su posicion en el archivo
                 return i;
             }
         }
         
+        //En caso de no existir, devuelve una posicion invalida
         return -1;
     }
     
+    //Busca y borra un objeto del RAF
     public boolean deleteRecord(String id) throws IOException{
         Book myBook;
         

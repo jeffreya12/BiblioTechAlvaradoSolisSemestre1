@@ -15,7 +15,8 @@ import resources.DefaultValues;
 
 /**
  *
- * @author jefal
+ * Manejador del RAF de la clase Student
+ * 
  */
 public class StudentFile {
     public RandomAccessFile randomAccessFile;
@@ -57,6 +58,7 @@ public class StudentFile {
         return regsQuantity;
     }
     
+    //Inserta un valor en la posicion especifica    
     public boolean putValue(int position, Student student) throws IOException{
         //una pequenna validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
@@ -81,8 +83,9 @@ public class StudentFile {
                 return false;
         }
         
-    }//fin metodo
+    }
     
+    //Inserta un objeto al finl del RAF
     public boolean addEndRecord(Student student) throws IOException{
         //insertar al final del archivo
         boolean success = putValue(regsQuantity, student);
@@ -93,6 +96,7 @@ public class StudentFile {
         return success;
     }
     
+    //Obtiene un objtedo a partir de su posicion en el RAF
     public Student getRecord(int position) throws IOException{
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
@@ -120,8 +124,9 @@ public class StudentFile {
             System.err.println("6001 position is out of bounds");
             return null;
         }
-    }//fin de metodo
+    }
     
+    //Retorna todos los objetos del RAF
     public List<Student> getAllRecords() throws IOException{
         
         //variables a retornar
@@ -137,21 +142,26 @@ public class StudentFile {
         }
         
         return students;
-    }//fin metodo
+    }
     
+    //Busca un objeto basado en su ID
     public int searchRecord(String id) throws IOException{
         Student myStudent = null;
         
+        //Recorro el RAF
         for(int i = 0; i < regsQuantity; i++){
+            //Obtendo el objeto
             myStudent = this.getRecord(i);
             if(myStudent.getId().equalsIgnoreCase(id)){
+                //Si el objeto existe, retorno su posicion
                 return i;
             }
         }
-        
+        //Si no existe, retorno una posicion invalida
         return -1;
     }
     
+    //Busca y borra un objeto del RAF
     public boolean deleteRecord(String id) throws IOException{
         Student myStudent;
         

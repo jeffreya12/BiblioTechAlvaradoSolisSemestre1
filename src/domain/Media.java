@@ -62,6 +62,7 @@ public class Media extends Material{
                 + ", genre=" + genre + ", published=" + published + '}';
     }
     
+    // Tamanno que va a tener el objeto en el RAF
     public int size(){
         return super.size()
                 + this.getTitle().length() * 2 

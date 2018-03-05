@@ -259,11 +259,15 @@ public class EndLoan extends javax.swing.JFrame {
     private void searchLoanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchLoanButtonActionPerformed
         // TODO add your handling code here:
 
+        //Texto a buscar
         String query = bookSearchTextField.getText().toLowerCase();
 
+        //Filtrador de la tabla
         TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
         loansTable.setRowSorter(tableRowSorter);
 
+        //Filtra la tabla segun el texto a buscar
+        //usa una expresion regular para omitir las mayusculas
         tableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
 
     }//GEN-LAST:event_searchLoanButtonActionPerformed
@@ -271,21 +275,31 @@ public class EndLoan extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         
+        //Guarda los ids de la tabla
         String studentId = loansTable.getValueAt(loansTable.getSelectedRow(), 0).toString();
         String materialId = loansTable.getValueAt(loansTable.getSelectedRow(), 1).toString();
+        //Guarda el tipo de material (Media, MediaPlayer, Book)
         String materialKind = loansTable.getValueAt(loansTable.getSelectedRow(), 2).toString();
+        //Guarda el estado del prestamo
         String state = loansTable.getValueAt(loansTable.getSelectedRow(), 3).toString();
+        //Guarda la fecha de finalizacion
         Date endDate = new Date (loansTable.getValueAt(loansTable.getSelectedRow(), 4).toString());
+        //Calcula los dias entre la fecha de finalizacion y la actual
         int days = DefaultValues.daysBetween(endDate, new Date());
+        //Multa a cobrar
         int fee = 0;
+        //Si la cantidad de dias entre fechas es mayor a 0
         if(days > 0){
+            //Calcula la multa multiplicando los dias con el monto asignado
             fee = days * Integer.parseInt(
             DefaultValues.loadSetting(DefaultValues.FEE_PER_DAY_SETTINGS_KEY)
                                          );
         }
         
+        //Si el estado del prestamo es activo
         if(state.equals(DefaultValues.IS_NOT_FINISHED_STATE)){
-         
+            //Crea un dialogo para preguntar si se termina o no el prestamo
+            //Muestra un mensaje con la multa a pagar
             int dialogResult = JOptionPane.showConfirmDialog (null, 
                 DefaultValues.FEE_PAYMENT_WARNING +
                 String.valueOf(fee) +
@@ -293,19 +307,28 @@ public class EndLoan extends javax.swing.JFrame {
                 "Warning",
                 JOptionPane.YES_NO_OPTION);
             
+            //Si se acepta terminar el prestamo
             if(dialogResult == JOptionPane.YES_OPTION){
                 try{
+                    //Busca las posiciones del prestamo, estudiante y material
                     int loanIndex = loanFile.searchRecord(studentId, materialId, endDate);
                     int studentIndex = studentFile.searchRecord(studentId);
                     int materialIndex = getMaterialIndex(materialId, materialKind);
+                    //Obtiene el nombre de la clase que corresponde al prestamo
+                    //(Media, MediaPlayer, Book)
                     String materialClass = getClassName(materialKind);
+                    //Obtiene el objeto Loan
                     Loan loan = loanFile.getRecord(loanIndex);
+                    //Lo marca como acabado, guarda la multa y lo actualiza en el RAF
                     loan.setFinished(true);
                     loan.setFee(fee);
                     loanFile.putValue(loanIndex, loan, studentIndex, materialIndex, materialClass);
                     
+                    //Obtiene el material
                     Material material = getMaterial(materialIndex, materialClass);
+                    //Aumenta la cantidad disponible
                     material.setAvailable(material.getAvailable() + 1);
+                    //Actualiza el material en el RAF
                     putMaterial(material, materialIndex, materialClass);
                     
                     this.dispose();

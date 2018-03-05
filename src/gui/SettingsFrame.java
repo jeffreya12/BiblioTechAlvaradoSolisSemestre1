@@ -20,6 +20,7 @@ public class SettingsFrame extends javax.swing.JFrame {
     public SettingsFrame() {
         initComponents();
         
+        //Pongo los valores guardados en la interfaz
         passwordTextField.setText(DefaultValues.loadSetting(
                                   DefaultValues.PASSWORD_SETTINGS_KEY));
         feeSpinner.setValue(Integer.parseInt(DefaultValues.loadSetting(
@@ -129,14 +130,18 @@ public class SettingsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+
         String newPassword = passwordTextField.getText();
         String newFee = feeSpinner.getValue().toString();
+        
+        //Toma los valores nuevos y los guarda en el xml
         if(DefaultValues.saveSetting(newPassword, newFee)){
             JOptionPane.showMessageDialog(this, 
                                         DefaultValues.SAVE_SETTINGS_SUCCESSFUL);
         }
         else{
+            //En caso de que fallara la insercion en el xml,
+            //muestra un mensaje de error
             JOptionPane.showMessageDialog(this, 
                                           DefaultValues.DEFAULT_QUERY_ERROR);
         }

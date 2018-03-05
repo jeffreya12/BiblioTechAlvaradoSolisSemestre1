@@ -105,9 +105,14 @@ public class PasswordFrame extends javax.swing.JFrame {
         // Se asigna la entrada a una variable local y se convierte la 
         // contraseña por default a un array de char para comparar
         
-        String savedPassword = DefaultValues.loadSetting(DefaultValues.PASSWORD_SETTINGS_KEY);
+        //Contrasenna guardada en el xml
+        String savedPassword = DefaultValues.loadSetting(
+                DefaultValues.PASSWORD_SETTINGS_KEY);
         
+        //Valor del campo de contrasenna
         char[] inputPassword = passwordField.getPassword();
+        
+        //Arreglo para comparar contra el campo de contrasenna
         char[] correctPassword = savedPassword.toCharArray();
         
         //Si la comparacion es exitosa se ingresa al sistema

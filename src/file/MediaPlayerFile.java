@@ -15,7 +15,8 @@ import resources.DefaultValues;
 
 /**
  *
- * @author jefal
+ * Manejador de RAF de la clase MediaPlayer
+ * 
  */
 public class MediaPlayerFile {
     
@@ -48,7 +49,7 @@ public class MediaPlayerFile {
             //necesitamos indicar cuantos registros tiene el archivo
             this.regsQuantity = (int)Math.ceil((double)randomAccessFile.length() / (double)regSize);
         }
-    }//fin start
+    }
     
     public void close() throws IOException{
         randomAccessFile.close();
@@ -58,6 +59,7 @@ public class MediaPlayerFile {
         return regsQuantity;
     }
     
+    //Inserta un objeto en la posicion especifica
     public boolean putValue(int position, MediaPlayer mediaPlayer) throws IOException{
         //una pequenna validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
@@ -86,8 +88,9 @@ public class MediaPlayerFile {
                 return false;
         }
         
-    }//fin metodo
+    }
     
+    //Inserta objeto al final del RAF
     public boolean addEndRecord(MediaPlayer mediaPlayer) throws IOException{
         //insertar al final del archivo
         boolean success = putValue(regsQuantity, mediaPlayer);
@@ -98,6 +101,7 @@ public class MediaPlayerFile {
         return success;
     }
     
+    //Obtiene objeto a partir de su posicion en el RAF
     public MediaPlayer getRecord(int position) throws IOException{
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
@@ -129,8 +133,9 @@ public class MediaPlayerFile {
             System.err.println("6001 position is out of bounds");
             return null;
         }
-    }//fin de metodo
+    }
     
+    //Obtiene todos los objetos del RAF
     public List<MediaPlayer> getAllRecords() throws IOException{
         
         //variables a retornar
@@ -146,21 +151,26 @@ public class MediaPlayerFile {
         }
         
         return mediaPlayers;
-    }//fin metodo
+    }
     
+    //Busca un objeto en el RAF basado en su ID
     public int searchRecord(String id) throws IOException{
         MediaPlayer myMediaPlayer = null;
         
+        //Recorro el RAF
         for(int i = 0; i < regsQuantity; i++){
+            //Obtengo el objeto
             myMediaPlayer = this.getRecord(i);
             if(myMediaPlayer.getId().equalsIgnoreCase(id)){
+                //Si el objeto existe, retorna la posicion
                 return i;
             }
         }
-        
+        //Si no existe, retorna una posicion invalida
         return -1;
     }
     
+    //Borra un objeto del RAF
     public boolean deleteRecord(String id) throws IOException{
         MediaPlayer myMediaPlayer;
         

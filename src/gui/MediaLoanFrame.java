@@ -27,11 +27,15 @@ import resources.DefaultValues;
  */
 public class MediaLoanFrame extends javax.swing.JFrame {
 
-    
+    //Booleano que verifica que el estudiante existe
     private boolean studentExist;
+    //Posicion del estudiante en el RAF
     private int studentIndex;
+    //Modelo de la tabla de medios
     private DefaultTableModel tableModel;
+    //Manejador del RAF de medios
     private MediaFile mediaFile;
+    //Manejador del RAf de Student
     private StudentFile studentFile;
     
     /**
@@ -42,21 +46,27 @@ public class MediaLoanFrame extends javax.swing.JFrame {
         
         studentExist = false;
         
+        //Asigna las columnas a la tabla
         tableModel = new DefaultTableModel(DefaultValues.MEDIA_TABLE_COLUMNS, 0);
         
         try{
+            //Llena la tabla con los datos
             File fileMedia = new File(DefaultValues.MEDIA_FILE_PATH);
             mediaFile = new MediaFile(fileMedia);
             List<Media> medias = mediaFile.getAllRecords();
+            //Obtiene los valores de las columans y los asigna a una fila
             for(Media currentMedia : medias){
                 Object row[] = { currentMedia.getTitle(), 
                                  currentMedia.getGenre(),
                                  currentMedia.getId(),
                                  currentMedia.getAvailable()
                                };
+                //Agrega la fila al modelo
                 tableModel.addRow(row);
             }
+            //Asigna el modelo a la tabla
             mediasTable.setModel(tableModel);
+            //Ordenador de la tabla segun las columnas
             mediasTable.setAutoCreateRowSorter(true);
         }
         catch(Exception e){
@@ -64,6 +74,7 @@ public class MediaLoanFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
         }
         
+        //La fecha por defecto es la actual
         endDatePicker.setDate(new Date());
         
     }
@@ -235,23 +246,28 @@ public class MediaLoanFrame extends javax.swing.JFrame {
     private void verifyStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyStudentButtonActionPerformed
         // TODO add your handling code here:
         
+        //Crea el id del Student con base en su carrera y los numeros ingresados
         String id = idStudentComboBox.getSelectedItem().toString() +
                     idStudentTextField.getText();
         
+        //Icono de verificacion
         ImageIcon verificationIcon;
         
         try {
             File fileStudent = new File(DefaultValues.STUDENT_FILE_PATH);
             studentFile = new StudentFile(fileStudent);
+            //Busca el Student
             studentIndex = studentFile.searchRecord(id);
             
+            //Si el Student existe
             if (studentIndex != -1 ){
+                //Cambia el icono
                 verificationIcon = new ImageIcon(DefaultValues.CHECK_ICON_PATH);
                 verificationLabel.setIcon(verificationIcon);
                 studentExist = true;
             }
             
-            else{
+            else{//Si no existe muestra un error
                 verificationIcon = new ImageIcon(DefaultValues.WRONG_ICON_PATH);
                 verificationLabel.setIcon(verificationIcon);
                 studentExist = false;
@@ -274,11 +290,15 @@ public class MediaLoanFrame extends javax.swing.JFrame {
     private void searchMediaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMediaButtonActionPerformed
         // TODO add your handling code here:
         
+        //Texto a buscar
         String query = mediaSearchTextField.getText().toLowerCase();
         
+        //Filtro de filas segun el criterio
         TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
         mediasTable.setRowSorter(tableRowSorter);
         
+        //Filtra la tabla
+        //Usa una expresion regular para ignorar las mayusculas
         tableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
         
     }//GEN-LAST:event_searchMediaButtonActionPerformed
@@ -286,20 +306,24 @@ public class MediaLoanFrame extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         
+        //Obtiene el ID de Media, la cantidad disponible y la fecha de finalizacion
         String mediaId = mediasTable.getValueAt(mediasTable.getSelectedRow(), 2).toString();
         int available = Integer.parseInt(mediasTable.getValueAt(mediasTable.getSelectedRow(), 3).toString());
         Date endLoanDate = endDatePicker.getDate();
         
+        //Si hay disponibles y el estudiante existe
         if (available > 0 && studentExist){
             try{
+                //Obtiene el Media y el Student
                 int mediaIndex = mediaFile.searchRecord(mediaId);
                 Media media = mediaFile.getRecord(mediaIndex);
                 Student student = studentFile.getRecord(studentIndex);
                 
+                //Crea un objeto Loan nuevo
                 Loan newLoan = new Loan(student, media, endLoanDate);
                 
-                
                 try{
+                    //Guarda el Loan en el RAF
                     File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
                     LoanFile loanFile = new LoanFile(fileLoan);
                     loanFile.addEndRecord(newLoan, studentIndex, mediaIndex,
@@ -307,6 +331,8 @@ public class MediaLoanFrame extends javax.swing.JFrame {
                     
                     loanFile.close();
                     
+                    //Disminuye la cantidad de disponibles del objeto prestado y lo
+                    //actualiza en el RAF
                     media.setAvailable(available - 1);
                     mediaFile.putValue(mediaIndex, media);
 
@@ -317,6 +343,7 @@ public class MediaLoanFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
                 }
                 
+                //Cierra los manejadores de los RAF
                 studentFile.close();
                 mediaFile.close();
                 

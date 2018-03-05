@@ -27,11 +27,15 @@ import resources.DefaultValues;
  */
 public class MediaPlayerLoanFrame extends javax.swing.JFrame {
 
-    
+    //Booleano que se encarga de verificar que el estudiante existe
     private boolean studentExist;
+    //Posicion del estudiante en el RAF
     private int studentIndex;
+    //Modelo de la tabla
     private DefaultTableModel tableModel;
+    //RAF de MediaPlayer
     private MediaPlayerFile mediaPlayerFile;
+    //RAF de Student
     private StudentFile studentFile;
     
     /**
@@ -42,6 +46,7 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
         
         studentExist = false;
         
+        //Asigna las columnas de la tabla
         tableModel = new DefaultTableModel(DefaultValues.MEDIA_PLAYER_TABLE_COLUMNS, 0);
         
         try{
@@ -49,13 +54,18 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
             mediaPlayerFile = new MediaPlayerFile(fileMediaPlayer);
             List<MediaPlayer> mediaPlayers = mediaPlayerFile.getAllRecords();
             for(MediaPlayer currentMediaPlayer : mediaPlayers){
+                //Asigna los datos correspondientes a las columnas dentro de 
+                //la tabla para cada objeto que consulta
                 Object row[] = { currentMediaPlayer.getBrand(), currentMediaPlayer.getModel(),
                                  currentMediaPlayer.getKind(), currentMediaPlayer.getId(),
                                  currentMediaPlayer.getAvailable()
                                };
+                //Agrega la fila al modelo
                 tableModel.addRow(row);
             }
+            //Aplica el modelo a la tabla
             mediaPlayersTable.setModel(tableModel);
+            //Ordena las filas segun las columnas
             mediaPlayersTable.setAutoCreateRowSorter(true);
         }
         catch(Exception e){
@@ -63,6 +73,7 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
         }
         
+        //Pone la fecha actual como por defecto
         endDatePicker.setDate(new Date());
         
     }
@@ -234,22 +245,26 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
     private void verifyStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyStudentButtonActionPerformed
         // TODO add your handling code here:
         
+        //Crea el id basado en la carrera y el codigo
         String id = idStudentComboBox.getSelectedItem().toString() +
                     idStudentTextField.getText();
         
+        //Icono de verificacion
         ImageIcon verificationIcon;
         
         try {
             File fileStudent = new File(DefaultValues.STUDENT_FILE_PATH);
             studentFile = new StudentFile(fileStudent);
+            //Busca el estudiante
             studentIndex = studentFile.searchRecord(id);
             
+            //Si existe, cambia el icono
             if (studentIndex != -1 ){
                 verificationIcon = new ImageIcon(DefaultValues.CHECK_ICON_PATH);
                 verificationLabel.setIcon(verificationIcon);
                 studentExist = true;
             }
-            
+            //Si no existe muestra una alerta
             else{
                 verificationIcon = new ImageIcon(DefaultValues.WRONG_ICON_PATH);
                 verificationLabel.setIcon(verificationIcon);
@@ -273,11 +288,15 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
     private void searchMediaPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMediaPlayerButtonActionPerformed
         // TODO add your handling code here:
         
+        //Texto a buscar
         String query = mediaPlayerSearchTextField.getText().toLowerCase();
         
+        //Crea un sorter para que filtra la tabla
         TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
         mediaPlayersTable.setRowSorter(tableRowSorter);
         
+        //Filtra la tabla segun el texto
+        //Usa una expresion regular para ignorar las mayusculas
         tableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
         
     }//GEN-LAST:event_searchMediaPlayerButtonActionPerformed
@@ -285,20 +304,29 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         
+        //Guardo el id del objeto a prestar
         String mediaPlayerId = mediaPlayersTable.getValueAt(mediaPlayersTable.getSelectedRow(), 3).toString();
+        //Guardo la cantidad de disponibles
         int available = Integer.parseInt(mediaPlayersTable.getValueAt(mediaPlayersTable.getSelectedRow(), 4).toString());
+        //Guardo la fecha de finalizacion del prestamo
         Date endLoanDate = endDatePicker.getDate();
         
+        //Si hay disponibles y el estudiante esta verificado
         if (available > 0 && studentExist){
             try{
+                //Guarda la posicion del mediaPlayer
                 int mediaPlayerIndex = mediaPlayerFile.searchRecord(mediaPlayerId);
+                //Consulta el mediaPlayer
                 MediaPlayer mediaPlayer = mediaPlayerFile.getRecord(mediaPlayerIndex);
+                //Consulta el estudiante
                 Student student = studentFile.getRecord(studentIndex);
                 
+                //Crea el objeto Loan
                 Loan newLoan = new Loan(student, mediaPlayer, endLoanDate);
                 
                 
                 try{
+                    //Escribe el Loan en el RAF
                     File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
                     LoanFile loanFile = new LoanFile(fileLoan);
                     loanFile.addEndRecord(newLoan, studentIndex, mediaPlayerIndex,
@@ -306,7 +334,9 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
                     
                     loanFile.close();
                     
+                    //Disminuye la cantidad de disponibles del objeto prestado
                     mediaPlayer.setAvailable(available - 1);
+                    //Actualiza el objeto en el RAF
                     mediaPlayerFile.putValue(mediaPlayerIndex, mediaPlayer);
 
                     this.dispose();
@@ -316,6 +346,7 @@ public class MediaPlayerLoanFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
                 }
                 
+                //Cierra los archivos que manejan los RAF
                 studentFile.close();
                 mediaPlayerFile.close();
                 

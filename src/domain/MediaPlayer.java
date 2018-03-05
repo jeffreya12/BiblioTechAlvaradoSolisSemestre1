@@ -62,6 +62,7 @@ public class MediaPlayer extends Material{
         return super.toString() + "\nAudiovisual{" + "brand=" + brand + ", model=" + model + ", kind=" + kind + '}';
     }
     
+    // Tamanno que va a tener el objeto en el RAF
     public int size(){
         return super.size()
                 + this.getBrand().length() * 2 

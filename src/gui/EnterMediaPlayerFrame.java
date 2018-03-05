@@ -184,6 +184,8 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
+        
+        //Guarda los valores de los campos a llenar
         String brand = brandTextField.getText();
         String model = modelTextField.getText();
         String kind = kindComboBox.getSelectedItem().toString();
@@ -191,10 +193,12 @@ public class EnterMediaPlayerFrame extends javax.swing.JFrame {
         int quantity = Integer.parseInt(quantitySpinner.getValue().toString());
         String id = idTextField.getText();
         
+        //Si el identificador el valido
         if (DefaultValues.checkId(id)){
             MediaPlayer newMediaPlayer = new MediaPlayer(brand, model, kind, quantity, id, quantity, description);
             
             try{
+                //Guarda el objeto en el RAF
                 File fileMediaPlayer = new File(DefaultValues.MEDIA_PLAYER_FILE_PATH);
                 MediaPlayerFile mediaPlayerFile = new MediaPlayerFile(fileMediaPlayer);
                 mediaPlayerFile.addEndRecord(newMediaPlayer);

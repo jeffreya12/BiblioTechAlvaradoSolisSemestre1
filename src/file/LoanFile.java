@@ -16,7 +16,8 @@ import resources.DefaultValues;
 
 /**
  *
- * @author jefal
+ * Archivo de manejo de RAF de la clase Loan
+ * 
  */
 public class LoanFile {
     public RandomAccessFile randomAccessFile;
@@ -58,10 +59,11 @@ public class LoanFile {
         return regsQuantity;
     }
     
+    //Inserta un registro en una posicion especifica
     public boolean putValue(int position, Loan loan, 
             int studentIndex, int materialIndex,
             String loanType) throws IOException{
-        //una pequenna validacion antes de insertar
+        //validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
             if(loan.size() > regSize){
                 System.err.print("7001 record size is out of bounds");
@@ -74,8 +76,11 @@ public class LoanFile {
                 randomAccessFile.writeLong(loan.getEndDate().getTime());
                 randomAccessFile.writeBoolean(loan.isFinished());
                 randomAccessFile.writeInt(loan.getFee());
+                //Posicion del objeto Student en su archivo
                 randomAccessFile.writeInt(studentIndex);
+                //Tipo de prestamo (Media, MediaPlayer, Book)
                 randomAccessFile.writeUTF(loanType);
+                //Posicion del objeto Material en su archivo
                 randomAccessFile.writeInt(materialIndex);
                 
                 return true;
@@ -87,7 +92,7 @@ public class LoanFile {
                 return false;
         }
         
-    }//fin metodo
+    }
     
     public boolean addEndRecord(Loan loan, int studentIndex, int materialIndex, 
             String loanType) throws IOException{
@@ -105,41 +110,52 @@ public class LoanFile {
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
             
+            //Manejador del RAF de Studente para consultar el Student de la
+            //clase Loan
             StudentFile studentFile = new StudentFile(new File (DefaultValues.STUDENT_FILE_PATH));
             
             //colocamos el puntero en el lugar 
             randomAccessFile.seek(position * regSize);
             
-            //instancia de person
+            //instancia de Loan
             Loan myLoan = new Loan();
-            
+            //Variable temporal para almacenar la fecha
             Date endDateTemp = new Date();
             
             //llevamos a cabo las lecturas
             endDateTemp.setTime(randomAccessFile.readLong());
             myLoan.setFinished(randomAccessFile.readBoolean());
             myLoan.setFee(randomAccessFile.readInt());
+            //El Student se asigna directamente del RAF de Student
             myLoan.setStudent(studentFile.getRecord(randomAccessFile.readInt()));
+            //Tipo de prestamo (Media, MediaPlayer, Book)
             String loanType = randomAccessFile.readUTF();
+            //Indice de Material en su RAF
             int materialIndex = randomAccessFile.readInt();
-                    
+            //Asigna la fecha al objeto Loan
             myLoan.setEndDate(endDateTemp);
             
+            //Se evalua el tipo de prestamo
+            //Para cada tipo, se crea una instancia de su respectivo manejador
+            //y se asigna al atributo Material en cada caso
             switch(loanType){
                 case "Book":
-                    BookFile bookFile = new BookFile(new File(DefaultValues.BOOK_FILE_PATH));
+                    BookFile bookFile = new BookFile(
+                            new File(DefaultValues.BOOK_FILE_PATH));
                     myLoan.setMaterial(bookFile.getRecord(materialIndex));
                     bookFile.close();
                     break;
                     
                 case "Media":
-                    MediaFile mediaFile = new MediaFile(new File(DefaultValues.MEDIA_FILE_PATH));
+                    MediaFile mediaFile = new MediaFile(
+                            new File(DefaultValues.MEDIA_FILE_PATH));
                     myLoan.setMaterial(mediaFile.getRecord(materialIndex));
                     mediaFile.close();
                     break;
                     
                 case "MediaPlayer":
-                    MediaPlayerFile mediaPlayerFile = new MediaPlayerFile(new File(DefaultValues.MEDIA_PLAYER_FILE_PATH));
+                    MediaPlayerFile mediaPlayerFile = new MediaPlayerFile(
+                            new File(DefaultValues.MEDIA_PLAYER_FILE_PATH));
                     myLoan.setMaterial(mediaPlayerFile.getRecord(materialIndex));
                     mediaPlayerFile.close();
                     break;
@@ -147,17 +163,19 @@ public class LoanFile {
             
             studentFile.close();
             
+            //Devuelve el objeto Loan completo
             return myLoan;            
         }
         else{
             System.err.println("6001 position is out of bounds");
             return null;
         }
-    }//fin de metodo
+    }
     
+    //Consulta todos los objetos Loan en el RAF
     public List<Loan> getAllRecords() throws IOException{
         
-        //variables a retornar
+        //variable a retornar
         List<Loan> loans = new ArrayList<Loan>();
         
         //recorro todos mis registros y los inserto en la lista
@@ -170,20 +188,25 @@ public class LoanFile {
         }
         
         return loans;
-    }//fin metodo
+    }
     
-    public int searchRecord(String studentId, String materialId, Date endDate) throws IOException{
+    //Busca un objeto basado en el id de Student, id de Material y su fecha
+    public int searchRecord(String studentId, String materialId, Date endDate) 
+            throws IOException{
         Loan myLoan = null;
         
+        //Recorre el RAF de Loan
         for(int i = 0; i < regsQuantity; i++){
+            //Obtiene el record
             myLoan = this.getRecord(i);
             if(myLoan.getStudent().getId().equalsIgnoreCase(studentId) &&
                myLoan.getMaterial().getId().equalsIgnoreCase(materialId) &&
                myLoan.getEndDate().equals(endDate)){
+                //En caso de que cumpla con el criterio, lo retorna
                 return i;
             }
         }
-        
+        //Si no existe, retorna una posicion invalida
         return -1;
     }    
 }

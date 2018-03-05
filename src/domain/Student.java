@@ -53,6 +53,7 @@ public class Student {
         return "Student{" + "name=" + name + ", lastNames=" + lastNames + ", id=" + id + '}';
     }
     
+    // Tamanno que va a tener el objeto en el RAF
     public int size(){
         return this.getLastNames().length() * 2 
                 + this.getName().length() * 2 

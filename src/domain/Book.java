@@ -65,6 +65,7 @@ public class Book extends Media{
                 + ", format=" + format + '}';
     }
     
+    // Tamanno que va a tener el objeto en el RAF
     public int size(){
         return super.size()
                 + this.getAuthor().length() * 2 

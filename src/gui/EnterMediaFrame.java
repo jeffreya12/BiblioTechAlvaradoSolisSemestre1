@@ -186,6 +186,8 @@ public class EnterMediaFrame extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
+        
+        //Guarda los valores de los campos a llenar
         String title = titleTextField.getText();
         String genre = genreTextField.getText();
         Date published = publishedDatePicker.getDate();
@@ -193,12 +195,14 @@ public class EnterMediaFrame extends javax.swing.JFrame {
         int quantity = Integer.parseInt(quantitySpinner.getValue().toString());
         String id = idTextField.getText();
         
+        //Si el identificador es valido
         if(DefaultValues.checkId(id)){
             
             Media newMedia = new Media(title, genre, published, quantity,
                     id, quantity, description);
             
             try{
+                //Inserta el objeto en el RAF
                 File fileMedia = new File(DefaultValues.MEDIA_FILE_PATH);
                 MediaFile mediaFile = new MediaFile(fileMedia);
                 mediaFile.addEndRecord(newMedia);

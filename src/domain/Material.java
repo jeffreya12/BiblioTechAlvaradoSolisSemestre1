@@ -62,6 +62,7 @@ public class Material {
         return "Material{" + "quantity=" + quantity + ", id=" + id + ", available=" + available + ", description=" + description + '}';
     }
     
+    // Tamanno que va a tener el objeto en el RAF
     public int size(){
         return this.getDescription().length() * 2 // description 
                 + this.getId().length() * 2 // id

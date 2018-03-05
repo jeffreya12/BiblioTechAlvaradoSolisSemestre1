@@ -16,7 +16,8 @@ import resources.DefaultValues;
 
 /**
  *
- * @author jefal
+ * Manejador del RAF de la clase Media
+ * 
  */
 public class MediaFile {
     
@@ -49,7 +50,7 @@ public class MediaFile {
             //necesitamos indicar cuantos registros tiene el archivo
             this.regsQuantity = (int)Math.ceil((double)randomAccessFile.length() / (double)regSize);
         }
-    }//fin start
+    }
     
     public void close() throws IOException{
         randomAccessFile.close();
@@ -59,6 +60,7 @@ public class MediaFile {
         return regsQuantity;
     }
     
+    //Inserta un objeto en la posicion especificada
     public boolean putValue(int position, Media media) throws IOException{
         //una pequenna validacion antes de insertar
         if(position >= 0 && position <= regsQuantity){
@@ -87,8 +89,9 @@ public class MediaFile {
                 return false;
         }
         
-    }//fin metodo
+    }
     
+    //Inserta un objeto al final del RAF    
     public boolean addEndRecord(Media media) throws IOException{
         //insertar al final del archivo
         boolean success = putValue(regsQuantity, media);
@@ -99,6 +102,7 @@ public class MediaFile {
         return success;
     }
     
+    //Obtiene un objeto basado en su posicion en el RAF
     public Media getRecord(int position) throws IOException{
         //validacion de la posicion
         if(position >= 0 && position <= regsQuantity){
@@ -108,19 +112,20 @@ public class MediaFile {
             //instancia de person
             Media myMedia = new Media();
             
+            //Variable temporal para guardar la fecha
             Date publishedTemp = new Date();
             
             //llevamos a cabo las lecturas
             myMedia.setTitle(randomAccessFile.readUTF());
             myMedia.setGenre(randomAccessFile.readUTF());
-            
             publishedTemp.setTime(randomAccessFile.readLong());
-            
-            myMedia.setPublished(publishedTemp);
             myMedia.setDescription(randomAccessFile.readUTF());
             myMedia.setId(randomAccessFile.readUTF());
             myMedia.setQuantity(randomAccessFile.readInt());
             myMedia.setAvailable(randomAccessFile.readInt());
+            
+            //Asigna la fecha al nuevo objeto
+            myMedia.setPublished(publishedTemp);
             
             //si es delete no retorno
             if(myMedia.getId().equalsIgnoreCase(DefaultValues.DELETE_NAME_ON_RECORD)){
@@ -135,11 +140,12 @@ public class MediaFile {
             System.err.println("6001 position is out of bounds");
             return null;
         }
-    }//fin de metodo
+    }
     
+    //Retorna todos los objetos del RAF
     public List<Media> getAllRecords() throws IOException{
         
-        //variables a retornar
+        //variable a retornar
         List<Media> medias = new ArrayList<Media>();
         
         //recorro todos mis registros y los inserto en la lista
@@ -152,21 +158,26 @@ public class MediaFile {
         }
         
         return medias;
-    }//fin metodo
+    }
     
+    //Busca un objeto en el RAF con base en su ID
     public int searchRecord(String id) throws IOException{
         Media myMedia = null;
         
+        //Recorro el RAF
         for(int i = 0; i < regsQuantity; i++){
+            //Obtengo el objeto
             myMedia = this.getRecord(i);
             if(myMedia.getId().equalsIgnoreCase(id)){
+                //Si existe, devuelve la posicion en el RAF
                 return i;
             }
         }
-        
+        //Si no existe, devuelve una posicion invalida
         return -1;
     }
     
+    //Borra un objeto del RAF
     public boolean deleteRecord(String id) throws IOException{
         Media myMedia;
         

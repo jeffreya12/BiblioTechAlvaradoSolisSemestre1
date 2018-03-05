@@ -239,6 +239,7 @@ public class EnterBookFrame extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         
+        //Guarda todos los datos de los campos a llenar        
         String author = authorTextField.getText();
         String title = titleTextField.getText();
         String genre = genreTextField.getText();
@@ -249,12 +250,14 @@ public class EnterBookFrame extends javax.swing.JFrame {
         int quantity = Integer.parseInt(quantitySpinner.getValue().toString());
         String id = idTextField.getText();
         
+        //Si el ISBN es valido
         if (Isbn.isValid(id)){
             
             Book newBook = new Book(author, language, format, title, genre, 
                     published, quantity, id, quantity, description);
             
             try{
+                //Inserta el objeto nuevo en el RAF
                 File fileBook = new File(DefaultValues.BOOK_FILE_PATH);
                 BookFile bookFile = new BookFile(fileBook);
                 bookFile.addEndRecord(newBook);

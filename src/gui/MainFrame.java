@@ -148,28 +148,35 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void studentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsButtonActionPerformed
         // TODO add your handling code here:
+        //Abre la ventana de registro de estudiantes
         EnterStudentFrame enterStudentFrame = new EnterStudentFrame();
         enterStudentFrame.setVisible(true);
     }//GEN-LAST:event_studentsButtonActionPerformed
 
     private void materialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButtonActionPerformed
         // TODO add your handling code here:
+        
+//Abre un dialogo para elegir el tipo de material
         Object selected = JOptionPane.showInputDialog(null, 
                 "Elija un tipo de recurso a registrar:", 
                 "Selection", JOptionPane.DEFAULT_OPTION, null, 
                 DefaultValues.MATERIAL_TYPE, "0");
+        //Si se acepta
         if (selected != null){ // Es nulo si no se scepta
             String selectedString = selected.toString();
             switch (selectedString){
                 case "Reproductor multimedia":
+                    //Abre la ventana de MediaPlayer
                     EnterMediaPlayerFrame enterMediaPlayerFrame = new EnterMediaPlayerFrame();
                     enterMediaPlayerFrame.setVisible(true);
                     break;
                 case "Multimedia":
+                    //Abre la ventana de Mediar
                     EnterMediaFrame enterMediaFrame = new EnterMediaFrame();
                     enterMediaFrame.setVisible(true);
                     break;
                 case "Libro":
+                    //Abre la ventana de Book
                     EnterBookFrame enterBookFrame = new EnterBookFrame();
                     enterBookFrame.setVisible(true);
                     break;
@@ -178,33 +185,39 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_materialButtonActionPerformed
 
     private void loanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanButtonActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:
+        
+        //Crea un dialogo para elegir que accion realizar
         Object actionSelection = JOptionPane.showInputDialog(null, 
-                "Elija un que desea hacer:", 
+                "Elija que desea hacer:", 
                 "Selection", JOptionPane.DEFAULT_OPTION, null, 
                 DefaultValues.LOAN_ACTIONS, "0");
+        //Si se hace una seleccion
         if (actionSelection != null){ // Es nulo si no se scepta
             String actionSelectionString = actionSelection.toString();
             switch (actionSelectionString){
                 case "Registrar nuevo préstamo":
+                    //Abre otro dialogo para elegir el tipo de material a prestar
                     Object loanTypeSelection = JOptionPane.showInputDialog(null, 
                             "Elija el tipo de préstamo:", 
                             "Selection", JOptionPane.DEFAULT_OPTION, null, 
                             DefaultValues.MATERIAL_TYPE, "0");
+                    //Si se hace una seleccion
                     if (loanTypeSelection != null){ // Es nulo si no se scepta
                         String loanTypeString = loanTypeSelection.toString();
                         switch (loanTypeString){
                             case "Reproductor multimedia":
-                                // MediaPlayer multimedia
+                                // Ventana de prestamo de MediaPlayer
                                 MediaPlayerLoanFrame mediaPlayerLoanFrame = new MediaPlayerLoanFrame();
                                 mediaPlayerLoanFrame.setVisible(true);
                                 break;
                             case "Multimedia":
-                                // Préstamo multimedia
+                                // Préstamo de multimedia
                                 MediaLoanFrame mediaLoanFrame = new MediaLoanFrame();
                                 mediaLoanFrame.setVisible(true);
                                 break;
                             case "Libro":
+                                //Prestamo de Libro
                                 BookLoanFrame bookLoanFrame = new BookLoanFrame();
                                 bookLoanFrame.setVisible(true);
                                 break;
@@ -212,7 +225,7 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                     break;
                 case "Terminar préstamo":
-                    // Frame de terminar préstamo
+                    // Abre la ventana de terminar préstamo
                     EndLoan endLoan = new EndLoan();
                     endLoan.setVisible(true);
                     break;
@@ -223,6 +236,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
         // TODO add your handling code here:
+        
+        //Abre la ventana de configuracion
         SettingsFrame settingsFrame = new SettingsFrame();
         settingsFrame.setVisible(true);
     }//GEN-LAST:event_settingsButtonActionPerformed

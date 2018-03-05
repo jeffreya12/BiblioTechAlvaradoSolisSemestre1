@@ -7,9 +7,7 @@ package gui;
 
 import domain.Student;
 import file.StudentFile;
-import java.awt.TextField;
 import java.io.File;
-import java.util.List;
 import javax.swing.JOptionPane;
 import resources.DefaultValues;
 
@@ -140,14 +138,18 @@ public class EnterStudentFrame extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
+        
+        //Guarda los valores de los TextField
         String name = nameTextField.getText();
         String lastNames = lastNamesTextField.getText();
         String id = idComboBox.getSelectedItem() + idTextField.getText();
         
+        //Si el identificador es valido
         if (DefaultValues.checkId(idTextField.getText())){
             Student newStudent = new Student(name, lastNames, id);
             
             try{
+                //Guarda el objeto en el RAF
                 File fileStudent = new File(DefaultValues.STUDENT_FILE_PATH);
                 StudentFile studentFile = new StudentFile(fileStudent);
                 studentFile.addEndRecord(newStudent);

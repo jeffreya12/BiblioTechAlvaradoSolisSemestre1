@@ -86,6 +86,7 @@ public class Loan {
                 + finished + ", fee=" + fee + '}';
     }
     
+    // Tamanno que va a tener el objeto en el RAF    
     public int size(){
         return 8 //Date size
                + 8 //Finished size
