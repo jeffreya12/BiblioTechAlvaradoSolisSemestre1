@@ -34,6 +34,9 @@ public class MainFrame extends javax.swing.JFrame {
         loanButton = new javax.swing.JButton();
         studentsButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
+        studentsModuleLabel = new javax.swing.JLabel();
+        materialModuleLabel = new javax.swing.JLabel();
+        loanModuleLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BiblioTech");
@@ -71,6 +74,18 @@ public class MainFrame extends javax.swing.JFrame {
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("BiblioTech");
 
+        studentsModuleLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studentsModuleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studentsModuleLabel.setText("Registro de estudiantes");
+
+        materialModuleLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        materialModuleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        materialModuleLabel.setText("Manejo de materiales");
+
+        loanModuleLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        loanModuleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        loanModuleLabel.setText("Manejo de préstamos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,11 +95,20 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(studentsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(studentsModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(studentsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(materialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(materialModuleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(materialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(loanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(loanModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -92,11 +116,16 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(materialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(loanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(studentsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(studentsModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(materialModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loanModuleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(studentsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(materialButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -220,8 +249,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton loanButton;
+    private javax.swing.JLabel loanModuleLabel;
     private javax.swing.JButton materialButton;
+    private javax.swing.JLabel materialModuleLabel;
     private javax.swing.JButton studentsButton;
+    private javax.swing.JLabel studentsModuleLabel;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

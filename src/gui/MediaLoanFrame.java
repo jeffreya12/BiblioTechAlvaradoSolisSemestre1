@@ -93,6 +93,7 @@ public class MediaLoanFrame extends javax.swing.JFrame {
         mediasTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         frameTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         frameTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
