@@ -27,11 +27,15 @@ import resources.DefaultValues;
  */
 public class BookLoanFrame extends javax.swing.JFrame {
 
-    
+    //Booleano que verifica si existe el estudiante
     private boolean studentExist;
+    //Posicion del estudiante en el RAF
     private int studentIndex;
+    //Modelo de la tabla
     private DefaultTableModel tableModel;
+    //Manejador del RAF de Book
     private BookFile bookFile;
+    //Manejador del RAF de Student
     private StudentFile studentFile;
     
     /**
@@ -42,20 +46,26 @@ public class BookLoanFrame extends javax.swing.JFrame {
         
         studentExist = false;
         
+        //Aplica las columnas a la tabla
         tableModel = new DefaultTableModel(DefaultValues.BOOK_TABLE_COLUMNS, 0);
         
         try{
+            //Recorre el RAF
             File fileBook = new File(DefaultValues.BOOK_FILE_PATH);
             bookFile = new BookFile(fileBook);
             List<Book> books = bookFile.getAllRecords();
             for(Book currentBook : books){
+                //Obtiene los datos de las columnas y los asigna a una fila
                 Object row[] = { currentBook.getTitle(), currentBook.getAuthor(),
                                  currentBook.getFormat(), currentBook.getId(),
                                  currentBook.getAvailable()
                                };
+                //Agrega la fila a la tabla
                 tableModel.addRow(row);
             }
+            //Aplica el modelo a la tabla
             booksTable.setModel(tableModel);
+            //Ordena la tabla segun la columna
             booksTable.setAutoCreateRowSorter(true);
         }
         catch(Exception e){
@@ -234,17 +244,22 @@ public class BookLoanFrame extends javax.swing.JFrame {
     private void verifyStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyStudentButtonActionPerformed
         // TODO add your handling code here:
         
+        //Crea el id del estudiante basado en la carrera y el codigo
         String id = idStudentComboBox.getSelectedItem().toString() +
                     idStudentTextField.getText();
         
+        //Icono de verificacion
         ImageIcon verificationIcon;
         
         try {
+            //Busca el estudiante
             File fileStudent = new File(DefaultValues.STUDENT_FILE_PATH);
             studentFile = new StudentFile(fileStudent);
             studentIndex = studentFile.searchRecord(id);
             
+            //Si existe el estudiante
             if (studentIndex != -1 ){
+                //Cambia el icono de verificacion
                 verificationIcon = new ImageIcon(DefaultValues.CHECK_ICON_PATH);
                 verificationLabel.setIcon(verificationIcon);
                 studentExist = true;
@@ -273,11 +288,15 @@ public class BookLoanFrame extends javax.swing.JFrame {
     private void searchBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookButtonActionPerformed
         // TODO add your handling code here:
         
+        //Criterio de busqueda
         String query = bookSearchTextField.getText().toLowerCase();
         
+        //Filtrador de la tabla
         TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(tableModel);
         booksTable.setRowSorter(tableRowSorter);
         
+        //Filtra la tabla segun la busqueda
+        //Usa una expresion regular para omitir las mayusculas
         tableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
         
     }//GEN-LAST:event_searchBookButtonActionPerformed
@@ -285,20 +304,28 @@ public class BookLoanFrame extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         
+        //Obtiene el ID del libro
         String bookId = booksTable.getValueAt(booksTable.getSelectedRow(), 3).toString();
+        //Obtiene la cantidad de libros disponibles
         int available = Integer.parseInt(booksTable.getValueAt(booksTable.getSelectedRow(), 4).toString());
+        //Obtiene la fecha de finalizacion
         Date endLoanDate = endDatePicker.getDate();
         
+        //Si hay disponibles
         if (available > 0 && studentExist){
             try{
+                //Obtiene el indice del libro
                 int bookIndex = bookFile.searchRecord(bookId);
+                //Obtiene el libro y el estudiante
                 Book book = bookFile.getRecord(bookIndex);
                 Student student = studentFile.getRecord(studentIndex);
                 
+                //Crea el prestamo
                 Loan newLoan = new Loan(student, book, endLoanDate);
                 
                 
                 try{
+                    //Guarda el prestamo en el RAF
                     File fileLoan = new File(DefaultValues.LOAN_FILE_PATH);
                     LoanFile loanFile = new LoanFile(fileLoan);
                     loanFile.addEndRecord(newLoan, studentIndex, bookIndex,
@@ -306,6 +333,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
                     
                     loanFile.close();
                     
+                    //Actualiza los disponibles en el libro y lo guarda en el RAF
                     book.setAvailable(available - 1);
                     bookFile.putValue(bookIndex, book);
 
@@ -316,6 +344,7 @@ public class BookLoanFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, DefaultValues.DEFAULT_QUERY_ERROR);
                 }
                 
+                //Cierra los manejadores de RAF
                 studentFile.close();
                 bookFile.close();
                 
