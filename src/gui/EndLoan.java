@@ -63,6 +63,7 @@ public class EndLoan extends javax.swing.JFrame {
                 tableModel.addRow(row);
             }
             loansTable.setModel(tableModel);
+            loansTable.setAutoCreateRowSorter(true);
             
             studentFile = new StudentFile(new File(DefaultValues.STUDENT_FILE_PATH));
             bookFile = new BookFile(new File(DefaultValues.BOOK_FILE_PATH));
