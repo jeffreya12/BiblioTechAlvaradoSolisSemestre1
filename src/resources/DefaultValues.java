@@ -94,6 +94,8 @@ public class DefaultValues {
     public static String FEE_PAYMENT_CONFIRMATION = "\n\n¿Desea terminar el préstamo?";
     public static String END_FINISHED_LOAN = "El préstamo ya se devolvió";
     public static String SAVE_SETTINGS_SUCCESSFUL = "Sus cambios se guardaron correctamente";
+    public static String DEFAULT_SELECTION_DIALOG_TITLE = "Elija una opción";
+    public static String DEFAULT_YES_NO_DIALOG_TITLE = "Atención";
     
     // Funciones
     

@@ -159,7 +159,7 @@ public class MainFrame extends javax.swing.JFrame {
 //Abre un dialogo para elegir el tipo de material
         Object selected = JOptionPane.showInputDialog(null, 
                 "Elija un tipo de recurso a registrar:", 
-                "Selection", JOptionPane.DEFAULT_OPTION, null, 
+                DefaultValues.DEFAULT_SELECTION_DIALOG_TITLE, JOptionPane.DEFAULT_OPTION, null, 
                 DefaultValues.MATERIAL_TYPE, "0");
         //Si se acepta
         if (selected != null){ // Es nulo si no se scepta
@@ -190,7 +190,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Crea un dialogo para elegir que accion realizar
         Object actionSelection = JOptionPane.showInputDialog(null, 
                 "Elija que desea hacer:", 
-                "Selection", JOptionPane.DEFAULT_OPTION, null, 
+                DefaultValues.DEFAULT_SELECTION_DIALOG_TITLE, JOptionPane.DEFAULT_OPTION, null, 
                 DefaultValues.LOAN_ACTIONS, "0");
         //Si se hace una seleccion
         if (actionSelection != null){ // Es nulo si no se scepta
@@ -200,7 +200,7 @@ public class MainFrame extends javax.swing.JFrame {
                     //Abre otro dialogo para elegir el tipo de material a prestar
                     Object loanTypeSelection = JOptionPane.showInputDialog(null, 
                             "Elija el tipo de préstamo:", 
-                            "Selection", JOptionPane.DEFAULT_OPTION, null, 
+                            DefaultValues.DEFAULT_SELECTION_DIALOG_TITLE, JOptionPane.DEFAULT_OPTION, null, 
                             DefaultValues.MATERIAL_TYPE, "0");
                     //Si se hace una seleccion
                     if (loanTypeSelection != null){ // Es nulo si no se scepta
@@ -226,7 +226,7 @@ public class MainFrame extends javax.swing.JFrame {
                     break;
                 case "Terminar préstamo":
                     // Abre la ventana de terminar préstamo
-                    EndLoan endLoan = new EndLoan();
+                    EndLoanFrame endLoan = new EndLoanFrame();
                     endLoan.setVisible(true);
                     break;
             }
